@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 18272,
-  "expoServerNgrokUrl": "https://ja-iry.anonymous.waffcakes.exp.direct",
-  "packagerNgrokUrl": "https://packager.ja-iry.anonymous.waffcakes.exp.direct",
-  "ngrokPid": 6628,
-  "webpackServerPort": 19006
+  "packagerPid": 67438,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "webpackServerPort": null
 }

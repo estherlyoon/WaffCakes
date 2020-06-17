@@ -12,47 +12,24 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
 import { useState } from "react";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
-import GameManager from "./GameManager";
 import Settings from "./Settings";
 import SettingsPopup from "./SettingsPopup";
 import SettingsModal from "./SettingsModal";
-import { TouchableHighlight } from "react-native-gesture-handler";
+import Level1 from "./levels/Level1.js";
+import Level2 from "./levels/Level2";
+import Level3 from "./levels/Level3";
 
 //Ask Ashwin about importing all files from folder
 // import Level1 from "./levels/Level1";
+// import {Level1, Level2, Level3}
 
 const Stack = createStackNavigator();
 // const handlePress = () => console.log("Image Pressed");
 const openSettings = () => {
   console.log("Open Settings");
 };
-
-function Level1({ navigation }) {
-  return (
-    <View>
-      <SettingsModal navigation={navigation} />
-      <Text>Hey! U made it to Level 1!!</Text>
-      <Text>time to learn the ropes...</Text>
-    </View>
-  );
-}
-function Level2({ navigation }) {
-  return (
-    <View>
-      <SettingsModal navigation={navigation} />
-      <Text>Level 2 here</Text>
-    </View>
-  );
-}
-function Level3({ navigation }) {
-  return (
-    <View>
-      <SettingsModal navigation={navigation} />
-      <Text>Level 3</Text>
-    </View>
-  );
-}
 
 function LevelNavigation({ navigation }) {
   return (
@@ -86,7 +63,6 @@ export default function App() {
         <Stack.Screen name="Level1" component={Level1} />
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
-        <Stack.Screen name="Game" component={GameManager} />
         {/* <Stack.Screen name="Level1" component={Level1} /> */}
       </Stack.Navigator>
     </NavigationContainer>
