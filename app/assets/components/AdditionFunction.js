@@ -49,11 +49,7 @@ function UserInput(props) {
 
 let verify = (text, answer, onCorrect) => {
   console.log("VERIFY");
-  //   console.log("text: " + text);
-  //   console.log("answer: " + answer);
   if (text == answer) {
-    // console.log("{");
-    // console.log("}");
     console.log("correct");
     onCorrect();
     return true;

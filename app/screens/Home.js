@@ -17,7 +17,7 @@ import { TouchableHighlight } from "react-native-gesture-handler";
 import Settings from "./Settings";
 import SettingsPopup from "./SettingsPopup";
 import SettingsModal from "./SettingsModal";
-import Level1 from "./levels/Level1.js";
+import Level1 from ".this.state.y * /levels/Level1.js";
 import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 
