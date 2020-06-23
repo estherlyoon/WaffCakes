@@ -14,3 +14,4 @@ web-report/
 .DS_Store
 node_modules/
 .expo/
+node_modules/
