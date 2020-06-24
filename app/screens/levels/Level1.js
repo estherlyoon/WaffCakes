@@ -7,6 +7,7 @@ import GestureRecognizer, {
 
 import Character from "../../assets/components/Character.js";
 import MoveCharacter from "../../assets/components/MoveCharacter.js";
+import SwipeToMove from "../../assets/components/SwipeToMove.js";
 
 import { GameEngine } from "react-native-game-engine";
 
@@ -23,10 +24,23 @@ export default function Level1({ navigation }) {
         systems={[MoveCharacter]}
         //The new objects on the screen
         entities={{
-          character: { x: 2, y: 2, renderer: <Character /> },
+          character: { x: 2, y: 2, backcolor: "blue", renderer: <Character /> },
         }}
       >
         <StatusBar hidden={true} />
+        <View
+          style={{
+            backgroundColor: "blue",
+            width: 300,
+            height: 300,
+            border: "30px solid green",
+            borderColor: "pink",
+            overflow: "hidden",
+            opacity: 0.5,
+          }}
+        >
+          <SwipeToMove engine={engine} />
+        </View>
       </GameEngine>
     </View>
   );
@@ -38,9 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   gameContainer: {
-    width: 300,
-    height: 300,
-    flex: null,
+    flex: 1,
     backgroundColor: "#f00",
   },
 });
