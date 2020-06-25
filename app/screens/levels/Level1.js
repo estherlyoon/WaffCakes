@@ -19,8 +19,44 @@ const onEvent = (e) => {
   }
 };
 
+let addProblem = () => {};
+// testDispatch = () => console.log("button pressed");
+
 export default function Level1({ navigation }) {
   const [engine, setEngine] = useState(null);
+  let generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
+
+  testButton = () => console.log("button pressed");
+  testDispatch = () => engine.dispatch("move-down");
+  addEntities = () =>
+    engine.swap({
+      problem: {
+        engine: engine,
+        lvl1A: generateRandomNumber(),
+        lvl1B: generateRandomNumber(),
+        // testD: testDispatch(),
+        renderer: <Problem />,
+      },
+      character: {
+        x: 175,
+        y: 150,
+        xspeed: 0,
+        yspeed: 0,
+        backcolor: "blue",
+        ref: (ref) => {
+          this.character = ref;
+        },
+        // renderer: <Character conf={{ type: "idle", fps: 24 }} />,
+        renderer: (
+          <Character
+            ref={(ref) => {
+              this.character = ref;
+            }}
+          />
+        ),
+      },
+    });
+
   return (
     <View style={styles.levelContainer}>
       <SettingsModal navigation={navigation} />
@@ -32,14 +68,47 @@ export default function Level1({ navigation }) {
         systems={[MoveCharacter]}
         //The new objects on the screen
         entities={{
-          character: { x: 2, y: 2, backcolor: "blue", renderer: <Character /> },
-          problem: { renderer: <Problem /> },
+          problem: {
+            engine: engine,
+            lvl1A: generateRandomNumber(),
+            lvl1B: generateRandomNumber(),
+            // testD: testDispatch(),
+            renderer: <Problem />,
+          },
+          character: {
+            x: 175,
+            y: 150,
+            xspeed: 0,
+            yspeed: 0,
+            backcolor: "blue",
+            ref: (ref) => {
+              this.character = ref;
+            },
+            // renderer: <Character conf={{ type: "idle", fps: 24 }} />,
+            renderer: <Character />,
+          },
         }}
-        //Sending events out
+        //Sending events outs
         onEvent={onEvent}
       >
         <StatusBar hidden={true} />
+        <View
+          style={{
+            left: 90,
+            top: 300,
+            position: "absolute",
+            justifyContent: "center",
+            alignItems: "center",
+            width: 200,
+            height: 200,
+            backgroundColor: "pink",
+          }}
+        >
+          <SwipeToMove engine={engine} />
+        </View>
       </GameEngine>
+      <Button title="LOAD ROOM" onPress={addEntities} />
+      {/* <Button title="Play Animation" onPress={this.character.play} /> */}
     </View>
   );
 }
