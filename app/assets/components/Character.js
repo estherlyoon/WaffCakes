@@ -12,7 +12,7 @@ class Character extends Component {
   characterStyle = () => {
     return {
       // backgroundColor: "blue",
-      backgroundColor: this.props.color,
+      backgroundColor: this.props.backcolor,
       position: "absolute",
       left: this.props.x,
       top: this.props.y,
