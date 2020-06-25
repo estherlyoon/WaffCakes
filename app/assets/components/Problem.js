@@ -9,25 +9,21 @@ class Problem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // console.log("problem engine: " + Object.getOwnPropertyNames(props.engine));
-    // a = this.generateRandomNumber();
-    a = props.lvl1A;
-    b = props.lvl1B;
-    // this.testDispatch();
-    console.log("problem engine: " + props.engine);
-    // props.testD;
+    this.difficulty = this.props.difficulty;
+    a = this.generateRandomNumber();
+    b = this.generateRandomNumber();
   }
-
-  testDispatch = () => this.props.engine.dispatch("move-down");
 
   generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
 
   render() {
+    // these call infinitely
+
     return (
       <View style={styles.problemContainer}>
         <Question
           style={{ top: 300 }}
-          problem={this.props.lvl1A + " + " + this.props.lvl1B + "  = ?"}
+          problem={a + " + " + b + "  = ?"}
         ></Question>
         <Answer
           engine={this.props.engine}

@@ -20,21 +20,22 @@ const onEvent = (e) => {
 };
 
 let addProblem = () => {};
-// testDispatch = () => console.log("button pressed");
 
 export default function Level1({ navigation }) {
-  const [engine, setEngine] = useState(null);
-  let generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
+  let engine = null;
+  let character = null;
 
-  testButton = () => console.log("button pressed");
-  testDispatch = () => engine.dispatch("move-down");
+  const setEngine = (ref) => {
+    engine = ref;
+    console.log("set engine called");
+    if (engine != null) addEntities();
+  };
+
   addEntities = () =>
     engine.swap({
       problem: {
         engine: engine,
-        lvl1A: generateRandomNumber(),
-        lvl1B: generateRandomNumber(),
-        // testD: testDispatch(),
+        difficulty: "medium",
         renderer: <Problem />,
       },
       character: {
@@ -43,17 +44,7 @@ export default function Level1({ navigation }) {
         xspeed: 0,
         yspeed: 0,
         backcolor: "blue",
-        ref: (ref) => {
-          this.character = ref;
-        },
-        // renderer: <Character conf={{ type: "idle", fps: 24 }} />,
-        renderer: (
-          <Character
-            ref={(ref) => {
-              this.character = ref;
-            }}
-          />
-        ),
+        renderer: <Character />,
       },
     });
 
@@ -62,29 +53,13 @@ export default function Level1({ navigation }) {
       <SettingsModal navigation={navigation} />
       <GameEngine
         //For assigning the engine to a class variable
-        ref={(ref) => setEngine(ref)}
+        ref={setEngine}
         style={styles.gameContainer}
         //For specifying what the game loop is going to be
         systems={[MoveCharacter]}
         //The new objects on the screen
         entities={{
-          problem: {
-            engine: engine,
-            lvl1A: generateRandomNumber(),
-            lvl1B: generateRandomNumber(),
-            // testD: testDispatch(),
-            renderer: <Problem />,
-          },
           character: {
-            x: 175,
-            y: 150,
-            xspeed: 0,
-            yspeed: 0,
-            backcolor: "blue",
-            ref: (ref) => {
-              this.character = ref;
-            },
-            // renderer: <Character conf={{ type: "idle", fps: 24 }} />,
             renderer: <Character />,
           },
         }}

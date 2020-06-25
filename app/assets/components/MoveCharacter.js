@@ -15,18 +15,13 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
     for (let i = 0; i < events.length; i++) {
       console.log(events[i]);
     }
-    // events = [];
   }
-  // dispatch({ type: "changeProblem" });
 
   if (events.length) {
     for (let i = 0; i < events.length; i++) {
-      // console.log(events[i]);
-      // console.log(entities);
       if (events[i] === "move-down") {
         console.log("Down dispatch successful");
         console.log(entities);
-        // character.y += 10;
         character.xspeed = 0;
         character.yspeed = 5;
         character.backcolor = "black";
@@ -53,8 +48,11 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
     // events = [];
   }
   if (i % 6 === 0) {
-    character.x += character.xspeed * 6;
-    character.y += character.yspeed * 6;
+    if (character != null) {
+      character.x += character.xspeed * 6;
+      character.y += character.yspeed * 6;
+    }
+
     // console.log("fdsf");
   }
   i++;
