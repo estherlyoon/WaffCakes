@@ -5,6 +5,7 @@ import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
 
+import Colors from "../../config/Colors.js";
 import Character from "../../assets/components/Character.js";
 import MoveCharacter from "../../assets/components/MoveCharacter.js";
 import Problem from "../../assets/components/Problem.js";
@@ -18,8 +19,6 @@ const onEvent = (e) => {
     console.log("Change problem");
   }
 };
-
-let addProblem = () => {};
 
 export default function Level1({ navigation }) {
   let engine = null;
@@ -76,7 +75,7 @@ export default function Level1({ navigation }) {
             alignItems: "center",
             width: 200,
             height: 200,
-            backgroundColor: "pink",
+            backgroundColor: Colors.swipeToMove,
           }}
         >
           <SwipeToMove engine={engine} />
@@ -91,10 +90,12 @@ export default function Level1({ navigation }) {
 const styles = StyleSheet.create({
   levelContainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.levelContainer,
   },
   gameContainer: {
     flex: 1,
-    backgroundColor: "#f00",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: Colors.gameCountainer,
   },
 });

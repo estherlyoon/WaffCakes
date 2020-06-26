@@ -2,6 +2,8 @@ import React, { Component, useState } from "react";
 import { View, StyleSheet, ImagePropTypes } from "react-native";
 import { GameEngine } from "react-native-game-engine";
 
+import Colors from "../../config/Colors.js";
+import Constants from "../../config/Constants.js";
 import Question from "./Question.js";
 import Answer from "./Answer.js";
 
@@ -10,8 +12,9 @@ class Problem extends Component {
     super(props);
     this.state = {};
     this.difficulty = this.props.difficulty;
-    a = this.generateRandomNumber();
-    b = this.generateRandomNumber();
+    a = [1, 2, 3, 4, 5, 6];
+    b = [1, 2, 3, 4, 5, 6];
+    leftAnswer = index = 0;
   }
 
   generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
@@ -50,42 +53,39 @@ class Problem extends Component {
 
 const styles = StyleSheet.create({
   problemContainer: {
-    position: "absolute",
-    top: 10,
-    left: 10,
-    height: 400,
-    width: 400,
-    backgroundColor: "green",
+    height: Constants.PROBLEM_CONTAINER_SIZE[1],
+    width: Constants.PROBLEM_CONTAINER_SIZE[0],
+    backgroundColor: Colors.problemBackground,
     justifyContent: "center",
     alignItems: "center",
   },
   leftAnswer: {
     position: "absolute",
-    top: 140,
-    left: 10,
+    top: Constants.LEFT_ANSWER[1],
+    left: Constants.LEFT_ANSWER[0],
     height: 100,
     width: 57,
-    backgroundColor: "pink",
+    backgroundColor: Colors.answer,
     // justifyContent: "flex-start",
     // alignItems: "center",
   },
   topAnswer: {
     position: "absolute",
-    top: 10,
-    left: 150,
+    top: Constants.TOP_ANSWER[1],
+    left: Constants.TOP_ANSWER[0],
     height: 100,
     width: 57,
-    backgroundColor: "pink",
+    backgroundColor: Colors.answer,
     // justifyContent: "flex-start",
     // alignItems: "center",
   },
   rightAnswer: {
     position: "absolute",
-    top: 140,
-    left: 300,
+    top: Constants.RIGHT_ANSWER[1],
+    left: Constants.RIGHT_ANSWER[0],
     height: 100,
     width: 57,
-    backgroundColor: "pink",
+    backgroundColor: Colors.anwer,
     // justifyContent: "flex-start",
     // alignItems: "center",
   },

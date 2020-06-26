@@ -52,8 +52,6 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
       character.x += character.xspeed * 6;
       character.y += character.yspeed * 6;
     }
-
-    // console.log("fdsf");
   }
   i++;
 
