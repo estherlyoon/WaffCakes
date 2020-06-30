@@ -14,10 +14,18 @@ import SwipeToMove from "../../assets/components/SwipeToMove.js";
 import { GameEngine } from "react-native-game-engine";
 
 const onEvent = (e) => {
-  console.log(e.type);
+  // console.log(e.type);
   if (e.type === "changeProblem") {
     console.log("Change problem");
   }
+};
+
+const onCorrect = () => {
+  console.log("correct! (spawn new room here)");
+};
+
+const onIncorrect = () => {
+  console.log("wrong! (spawn enemies here)");
 };
 
 export default function Level1({ navigation }) {
@@ -30,11 +38,17 @@ export default function Level1({ navigation }) {
     if (engine != null) addEntities();
   };
 
-  addEntities = () =>
+  let generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
+
+  let addEntities = () =>
     engine.swap({
       problem: {
         engine: engine,
         difficulty: "medium",
+        a: generateRandomNumber(),
+        b: generateRandomNumber(),
+        onCorrect: onCorrect,
+        onIncorrect: onIncorrect,
         renderer: <Problem />,
       },
       character: {
@@ -49,7 +63,6 @@ export default function Level1({ navigation }) {
 
   return (
     <View style={styles.levelContainer}>
-      <SettingsModal navigation={navigation} />
       <GameEngine
         //For assigning the engine to a class variable
         ref={setEngine}
@@ -65,21 +78,11 @@ export default function Level1({ navigation }) {
         //Sending events outs
         onEvent={onEvent}
       >
+        <SettingsModal navigation={navigation} />
         <StatusBar hidden={true} />
-        <View
-          style={{
-            left: 90,
-            top: 300,
-            position: "absolute",
-            justifyContent: "center",
-            alignItems: "center",
-            width: 200,
-            height: 200,
-            backgroundColor: Colors.swipeToMove,
-          }}
-        >
+        {/* <View style={styles.swipeArea}>
           <SwipeToMove engine={engine} />
-        </View>
+        </View> */}
       </GameEngine>
       <Button title="LOAD ROOM" onPress={addEntities} />
       {/* <Button title="Play Animation" onPress={this.character.play} /> */}
@@ -96,6 +99,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.gameCountainer,
+    backgroundColor: "yellow",
+  },
+  swipeArea: {
+    left: 90,
+    top: 300,
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 200,
+    height: 200,
+    backgroundColor: "pink",
   },
 });

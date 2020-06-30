@@ -9,6 +9,7 @@ class SwipeToMove extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    console.log("swipe engine: " + props.engine);
   }
 
   onSwipeUp(gestureState) {

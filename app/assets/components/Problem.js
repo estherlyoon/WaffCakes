@@ -7,14 +7,26 @@ import Constants from "../../config/Constants.js";
 import Question from "./Question.js";
 import Answer from "./Answer.js";
 
+const generateAnswers = () => {
+  let answer = Array(3);
+  shuffle = require("shuffle-array");
+  answer[0] = a + b - 1;
+  answer[1] = a + b;
+  answer[2] = a + b + 1;
+  return shuffle(answer);
+};
+
 class Problem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.difficulty = this.props.difficulty;
-    a = [1, 2, 3, 4, 5, 6];
-    b = [1, 2, 3, 4, 5, 6];
+    a = props.a;
+    b = props.b;
+    onCorrect = props.onCorrect;
+    onIncorrect = props.onIncorrect;
     leftAnswer = index = 0;
+    answer = generateAnswers();
   }
 
   generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
@@ -32,19 +44,22 @@ class Problem extends Component {
           engine={this.props.engine}
           dispatchMessage="move-left"
           style={styles.leftAnswer}
-          text="3"
+          text={answer[0]}
+          onPress={answer[0] === a + b ? onCorrect : onIncorrect}
         />
         <Answer
           engine={this.props.engine}
           dispatchMessage="move-up"
           style={styles.topAnswer}
-          text="4"
+          text={answer[1]}
+          onPress={answer[1] === a + b ? onCorrect : onIncorrect}
         />
         <Answer
           engine={this.props.engine}
           dispatchMessage="move-right"
           style={styles.rightAnswer}
-          text="5"
+          text={answer[2]}
+          onPress={answer[2] === a + b ? onCorrect : onIncorrect}
         />
       </View>
     );

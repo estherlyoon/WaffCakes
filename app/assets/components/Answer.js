@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Image, Text } from "react-native";
 import { Icon } from "react-native-elements";
+import Images from "../../config/Images.js";
+import Constants from "../../config/Constants.js";
 
 class Answer extends Component {
   constructor(props) {
@@ -12,9 +14,13 @@ class Answer extends Component {
       <View style={this.props.style}>
         {/* <TouchableOpacity onPress={() => console.log(this.props.text)}> */}
         <TouchableOpacity
-          onPress={() => this.props.engine.dispatch(this.props.dispatchMessage)}
+          onPress={() => {
+            this.props.onPress();
+            this.props.engine.dispatch(this.props.dispatchMessage);
+          }}
         >
-          <Image source={require("../images/door.png")} style={styles.door} />
+          <Image source={Images.door} style={styles.door} />
+          <Text>{this.props.text}</Text>
         </TouchableOpacity>
       </View>
     );
