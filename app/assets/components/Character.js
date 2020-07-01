@@ -43,10 +43,10 @@ class Character extends Component {
     switch(this.animation) {
         case "fight-stance":
         case "idle": 
-            frameLoop = this.props.frame % idle.length;
-            return (idle[frameLoop].image); //kinda inefficient, numbers could get big
+            frameLoop %= idle.length;
+            return (idle[frameLoop].image);
         default: 
-            frameLoop = this.props.frame % idle.length;
+            frameLoop %= idle.length;
             return (idle[frameLoop].image);
     }
   }

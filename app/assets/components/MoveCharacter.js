@@ -15,6 +15,7 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
   //   });
   // }
 
+  //animation purposes
   if(i % 3 == 0){
     character.frame += 1;
   }
