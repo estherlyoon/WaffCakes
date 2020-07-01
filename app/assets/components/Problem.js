@@ -7,56 +7,44 @@ import Constants from "../../config/Constants.js";
 import Question from "./Question.js";
 import Answer from "./Answer.js";
 
-var oldA = -1;
-var oldB = -1;
-const generateAnswers = (props) => {
-  if (props.a != oldA || props.b != oldB) {
-    let answer = Array(3);
-    shuffle = require("shuffle-array");
-    answer[0] = props.a + props.b - 1;
-    answer[1] = props.a + props.b;
-    answer[2] = props.a + props.b + 1;
-    oldA = props.a;
-    oldB = props.b;
-    return shuffle(answer);
-  }
-  return null;
+const generateAnswers = (a, b) => {
+  let answer = Array(3);
+  shuffle = require("shuffle-array");
+  answer[0] = a + b - 1;
+  answer[1] = a + b;
+  answer[2] = a + b + 1;
+  return shuffle(answer);
 };
 
 class Problem extends Component {
-  // only called once (so we know)
   constructor(props) {
     super(props);
     this.state = {};
     this.difficulty = this.props.difficulty;
-    // a = props.a;
-    // b = props.b;
+    a = this.generateRandomNumber();
+    b = this.generateRandomNumber();
     onCorrect = props.onCorrect;
     onIncorrect = props.onIncorrect;
-    leftAnswer = index = 0;
-    answer = generateAnswers(props);
+    answer = generateAnswers(a, b);
   }
 
   generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
+  isCorrectAnswer = (index) => answer[index] === a + b;
 
   render() {
-    // these call infinitely
-    newAnswer = generateAnswers(this.props);
-    if (newAnswer != null) answer = newAnswer;
-
     return (
       <View style={styles.problemContainer}>
         <Question
           style={{ top: 300 }}
-          problem={this.props.a + " + " + this.props.b + "  = ?"}
+          problem={a + " + " + b + "  = ?"}
         ></Question>
         <Answer
           engine={this.props.engine}
           dispatchMessage="move-left"
           style={styles.leftAnswer}
           text={answer[0]}
-          onPress={
-            answer[0] === this.props.a + this.props.b ? onCorrect : onIncorrect
+          dispatchCorrectness={
+            this.isCorrectAnswer(0) ? onCorrect : onIncorrect
           }
         />
         <Answer
@@ -64,8 +52,8 @@ class Problem extends Component {
           dispatchMessage="move-up"
           style={styles.topAnswer}
           text={answer[1]}
-          onPress={
-            answer[1] === this.props.a + this.props.b ? onCorrect : onIncorrect
+          dispatchCorrectness={
+            this.isCorrectAnswer(1) ? onCorrect : onIncorrect
           }
         />
         <Answer
@@ -73,8 +61,8 @@ class Problem extends Component {
           dispatchMessage="move-right"
           style={styles.rightAnswer}
           text={answer[2]}
-          onPress={
-            answer[2] === this.props.a + this.props.b ? onCorrect : onIncorrect
+          dispatchCorrectness={
+            this.isCorrectAnswer(2) ? onCorrect : onIncorrect
           }
         />
       </View>

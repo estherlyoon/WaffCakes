@@ -21,7 +21,7 @@ class Answer extends Component {
         {/* <TouchableOpacity onPress={() => console.log(this.props.text)}> */}
         <TouchableOpacity
           onPress={() => {
-            this.props.onPress();
+            this.props.dispatchCorrectness();
             this.props.engine.dispatch(this.props.dispatchMessage);
           }}
         >

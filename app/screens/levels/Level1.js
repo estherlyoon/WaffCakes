@@ -15,55 +15,51 @@ import { GameEngine } from "react-native-game-engine";
 import { add } from "react-native-reanimated";
 
 const onCorrect = (engine) => {
-  engine.dispatch("CorrectAnswer");
-  console.log("correct! (spawn new room here)");
+  engine.dispatch("correct-answer-touched");
 };
 
 const onIncorrect = (engine) => {
-  engine.dispatch("IncorrectAnswer");
-  console.log("wrong! (spawn enemies here)");
+  engine.dispatch("incorrect-answer-touched");
 };
 
 export default function Level1({ navigation }) {
   let engine = null;
-  let character = null;
-
   const setEngine = (ref) => {
     engine = ref;
     console.log("set engine called");
     if (engine != null) addEntities();
   };
 
-  let generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
-
-  const generateAnswers = (props) => {
-    let answer = Array(3);
-    shuffle = require("shuffle-array");
-    answer[0] = props.a + props.b - 1;
-    answer[1] = props.a + props.b;
-    answer[2] = props.a + props.b + 1;
-    return shuffle(answer);
-  };
-
   const onEvent = (e) => {
     console.log(e);
     if (e === "correct") {
       console.log("onEvent correct answer found");
+      removeProblem();
       addEntities();
     } else if (e === "incorrect") {
       console.log("onEvent incorrect answer found");
+      removeProblem();
       addWrongEntities();
     }
   };
-  //   };
-  //
+  let removeProblem = () => {
+    engine.swap({
+      character: {
+        x: 175,
+        y: 150,
+        xspeed: 0,
+        yspeed: 0,
+        backcolor: "blue",
+        renderer: <Character />,
+      },
+    });
+    engine.dispatch("reset-user-answer");
+  };
   let addEntities = () => {
     engine.swap({
       problem: {
         engine: engine,
         difficulty: "medium",
-        a: generateRandomNumber(),
-        b: generateRandomNumber(),
         onCorrect: () => onCorrect(engine),
         onIncorrect: () => onIncorrect(engine),
         renderer: <Problem />,
@@ -77,7 +73,6 @@ export default function Level1({ navigation }) {
         renderer: <Character />,
       },
     });
-    engine.dispatch("resetProblem");
   };
 
   let addWrongEntities = () => {
@@ -85,8 +80,6 @@ export default function Level1({ navigation }) {
       problem: {
         engine: engine,
         difficulty: "medium",
-        a: generateRandomNumber(),
-        b: generateRandomNumber(),
         onCorrect: () => onCorrect(engine),
         onIncorrect: () => onIncorrect(engine),
         renderer: <Problem />,
@@ -100,7 +93,6 @@ export default function Level1({ navigation }) {
         renderer: <Character />,
       },
     });
-    engine.dispatch("resetProblem");
   };
 
   return (
