@@ -15,6 +15,10 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
   //   });
   // }
 
+  if(i % 3 == 0){
+    character.frame += 1;
+  }
+
   if (events.length) {
     for (let i = 0; i < events.length; i++) {
       if (events[i] === "reset-user-answer") answerCorrect = 0;
@@ -40,6 +44,7 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
       }
     }
   }
+
   if (i % 6 === 0) {
     if (character != null) {
       if (character.x <= Constants.LEFT_ANSWER[0] + Constants.DOOR_WIDTH) {

@@ -58,6 +58,8 @@ export default function Level1({ navigation }) {
         xspeed: 0,
         yspeed: 0,
         backcolor: "blue",
+        frame: 0,
+        animation: "idle",
         renderer: <Character />,
       },
     });
@@ -78,6 +80,8 @@ export default function Level1({ navigation }) {
         xspeed: 0,
         yspeed: 0,
         backcolor: "blue",
+        animation: "idle",
+        frame: 0,
         renderer: <Character />,
       },
     });
@@ -98,6 +102,8 @@ export default function Level1({ navigation }) {
         xspeed: 0,
         yspeed: 0,
         backcolor: "pink",
+        animation: "fight-stance",
+        frame: 0,
         renderer: <Character />,
       },
     });
@@ -118,6 +124,8 @@ export default function Level1({ navigation }) {
         //The new objects on the screen
         entities={{
           character: {
+            frame: 0,
+            animation: "idle",
             renderer: <Character />,
           },
         }}
