@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, StatusBar, Text, View, Button, Image } from "react-native";
+import {
+  StyleSheet,
+  StatusBar,
+  Text,
+  View,
+  Button,
+  Image,
+  ImageBackground,
+} from "react-native";
 import SettingsModal from "../SettingsModal";
 import GestureRecognizer, {
   swipeDirections,
@@ -13,7 +21,7 @@ import SwipeToMove from "../../assets/components/SwipeToMove.js";
 
 import { GameEngine } from "react-native-game-engine";
 import { add } from "react-native-reanimated";
-
+import Images from "../../config/Images.js";
 const onCorrect = (engine) => {
   engine.dispatch("correct-answer-touched");
 };
@@ -97,6 +105,10 @@ export default function Level1({ navigation }) {
 
   return (
     <View style={styles.levelContainer}>
+      <ImageBackground
+        style={styles.backgroundImage}
+        source={Images.paperBackground}
+      ></ImageBackground>
       <GameEngine
         //For assigning the engine to a class variable
         ref={setEngine}
@@ -133,7 +145,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "yellow",
+  },
+  backgroundImage: {
+    position: "absolute",
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    opacity: 0.7,
   },
   swipeArea: {
     left: 90,

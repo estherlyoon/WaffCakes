@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   problemContainer: {
     height: Constants.PROBLEM_CONTAINER_SIZE[1],
     width: Constants.PROBLEM_CONTAINER_SIZE[0],
-    backgroundColor: Colors.problemBackground,
+    // backgroundColor: Colors.problemBackground,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     left: Constants.RIGHT_ANSWER[0],
     height: 100,
     width: 57,
-    backgroundColor: Colors.anwer,
+    backgroundColor: Colors.answer,
     // justifyContent: "flex-start",
     // alignItems: "center",
   },

@@ -25,9 +25,12 @@ class Answer extends Component {
             this.props.engine.dispatch(this.props.dispatchMessage);
           }}
         >
-          <ImageBackground source={Images.door} style={styles.door}>
-            <Text>{this.props.text}</Text>
-          </ImageBackground>
+          <ImageBackground
+            source={Images.door}
+            style={styles.door}
+          ></ImageBackground>
+
+          <Text>{this.props.text}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -36,15 +39,10 @@ class Answer extends Component {
 
 const styles = StyleSheet.create({
   door: {
-    // position: "absolute",
-    height: 100,
-    width: 57,
+    height: Constants.DOOR_HEIGHT,
+    width: Constants.DOOR_WIDTH,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "green",
-    // justifyContent: "center",
-    // alignItems: "center",
-    // scale: 2.0,
   },
 });
 

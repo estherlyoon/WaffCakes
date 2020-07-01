@@ -5,4 +5,5 @@ export default Colors = {
   levelContainer: "white",
   gameContainer: "red",
   problemBackground: "green",
+  answer: "dodgerblue",
 };
