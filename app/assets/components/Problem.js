@@ -85,8 +85,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 57,
     backgroundColor: Colors.answer,
-    // justifyContent: "flex-start",
-    // alignItems: "center",
   },
   topAnswer: {
     position: "absolute",
@@ -95,8 +93,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 57,
     backgroundColor: Colors.answer,
-    // justifyContent: "flex-start",
-    // alignItems: "center",
   },
   rightAnswer: {
     position: "absolute",
@@ -105,8 +101,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 57,
     backgroundColor: Colors.answer,
-    // justifyContent: "flex-start",
-    // alignItems: "center",
   },
 });
 

@@ -7,16 +7,9 @@ var i = 0;
 var answerCorrect = 0;
 export default function MoveCharacter(entities, { touches, events, dispatch }) {
   let character = entities.character;
-  // if (i === 100) {
-  //   entities.character.props.ref.idle({
-  //     type: "idle",
-  //     fps: 24,
-  //     resetAfterFinish: true,
-  //   });
-  // }
 
   //animation purposes
-  if(i % 3 == 0){
+  if (i % 3 == 0) {
     character.frame += 1;
   }
 
