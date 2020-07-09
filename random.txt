@@ -1,0 +1,21 @@
+let problem = entities.problem
+
+let correctAnswer = 
+    if problem.type === addition
+        correctAnswer = problem.a + problem.b
+
+
+
+*when door is touched*
+    chosenAnswer = door's answer (or correct bool?)
+
+
+*when door is reached*
+    if correctAnswer === chosenAnswer
+        dispatch("correct")
+    else
+        dispatch("incorrect")
+
+
+
+// also: should we change addEntities or remove and put in GameEngine's props + make new swap function?

@@ -9,7 +9,7 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
   let character = entities.character;
 
   //animation purposes
-  if (i % 3 == 0) {
+  if (i % 3 == 0 && typeof character !== "undefined") {
     character.frame += 1;
   }
 
@@ -21,7 +21,11 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
       else if (events[i] === "incorrect-answer-touched")
         answerCorrect = answerCorrect === 0 ? -1 : answerCorrect;
 
-      if (character.xspeed === 0 && character.yspeed === 0) {
+      if (
+        typeof character !== "undefined" &&
+        character.xspeed === 0 &&
+        character.yspeed === 0
+      ) {
         if (events[i] === "move-down") {
           character.xspeed = 0;
           character.yspeed = 5;
@@ -40,7 +44,7 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
   }
 
   if (i % 6 === 0) {
-    if (character != null) {
+    if (typeof character !== "undefined") {
       if (character.x <= Constants.LEFT_ANSWER[0] + Constants.DOOR_WIDTH) {
         if (answerCorrect === 1) {
           dispatch("correct");

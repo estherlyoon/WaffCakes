@@ -6,10 +6,10 @@ import Sprite from "./Sprite.js";
 
 //types of animation: idle, fight-stance
 const idle = [
-  { image: require("../images/lackey/idle/tile000.png") },
-  { image: require("../images/lackey/idle/tile001.png") },
-  { image: require("../images/lackey/idle/tile002.png") },
-  { image: require("../images/lackey/idle/tile003.png") },
+  // { image: require("../images/lackey/idle/tile000.png") },
+  // { image: require("../images/lackey/idle/tile001.png") },
+  // { image: require("../images/lackey/idle/tile002.png") },
+  // { image: require("../images/lackey/idle/tile003.png") },
 ];
 
 class Lackey extends Component {
@@ -49,18 +49,18 @@ class Lackey extends Component {
     };
   };
 
-  getFrame = () => {
-    let frameLoop = this.props.frame;
-    switch (this.animation) {
-      case "fight-stance":
-      case "idle":
-        frameLoop %= idle.length;
-        return idle[frameLoop].image;
-      default:
-        frameLoop %= idle.length;
-        return idle[frameLoop].image;
-    }
-  };
+  // getFrame = () => {
+  //   let frameLoop = this.props.frame;
+  //   switch (this.animation) {
+  //     case "fight-stance":
+  //     case "idle":
+  //       frameLoop %= idle.length;
+  //       return idle[frameLoop].image;
+  //     default:
+  //       frameLoop %= idle.length;
+  //       return idle[frameLoop].image;
+  //   }
+  // };
 
   render() {
     // return <View style={this.lackeyStyle()} />;
@@ -78,4 +78,4 @@ class Lackey extends Component {
   }
 }
 
-export default Character;
+export default Lackey;

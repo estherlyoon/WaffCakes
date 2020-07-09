@@ -18,6 +18,7 @@ import Character from "../../assets/components/Character.js";
 import MoveCharacter from "../../assets/components/MoveCharacter.js";
 import Problem from "../../assets/components/Problem.js";
 import SwipeToMove from "../../assets/components/SwipeToMove.js";
+import Lackey from "../../assets/components/Lackey.js";
 
 import { GameEngine } from "react-native-game-engine";
 import { add } from "react-native-reanimated";
@@ -32,32 +33,22 @@ const onIncorrect = (engine) => {
 
 export default function Level1({ navigation }) {
   let engine = null;
-  let numCorrect = 0;
   const setEngine = (ref) => {
     engine = ref;
     console.log("set engine called");
-    if (engine != null) {
-      console.log("addproblem called");
-
-      addProblem();
-    }
+    if (engine != null) addEntities();
   };
 
   const onEvent = (e) => {
     console.log(e);
     if (e === "correct") {
+      console.log("onEvent correct answer found");
       removeProblem();
-      if (numCorrect >= 10) {
-        addBoss();
-      } else {
-        console.log("onEvent correct answer found");
-        addProblem();
-        numCorrect++;
-      }
+      addEntities();
     } else if (e === "incorrect") {
       console.log("onEvent incorrect answer found");
       removeProblem();
-      addLackeys();
+      addWrongEntities();
     }
   };
 
@@ -77,7 +68,7 @@ export default function Level1({ navigation }) {
     engine.dispatch("reset-user-answer");
   };
 
-  let addProblem = () => {
+  let addEntities = () => {
     engine.swap({
       problem: {
         engine: engine,
@@ -99,52 +90,25 @@ export default function Level1({ navigation }) {
     });
   };
 
-  let addLackeys = () => {
+  let addWrongEntities = () => {
     engine.swap({
       problem: {
         engine: engine,
         difficulty: "medium",
-        onCorrect: () => onCorrect(engine), // change
+        onCorrect: () => onCorrect(engine),
         onIncorrect: () => onIncorrect(engine),
         renderer: <Problem />,
       },
-      character: {
-        x: 175,
-        y: 350,
-        xspeed: 0,
-        yspeed: 0,
-        backcolor: "pink",
-        animation: "fight-stance",
-        frame: 0,
-        renderer: <Character />,
-      },
-      lackey: {
-        x: 175,
-        y: 200,
-        renderer: <Lackey />,
-      },
-    });
-  };
-
-  let addBoss = () => {
-    engine.swap({
-      problem: {
-        engine: engine,
-        difficulty: "medium",
-        onCorrect: () => onCorrect(engine), // change
-        onIncorrect: () => onIncorrect(engine),
-        renderer: <Problem />,
-      },
-      character: {
-        x: 175,
-        y: 250,
-        xspeed: 0,
-        yspeed: 0,
-        backcolor: "pink",
-        animation: "fight-stance",
-        frame: 0,
-        renderer: <Character />,
-      },
+      // character: {
+      //   x: 175,
+      //   y: 250,
+      //   xspeed: 0,
+      //   yspeed: 0,
+      //   backcolor: "pink",
+      //   animation: "fight-stance",
+      //   frame: 0,
+      //   renderer: <Character />,
+      // },
     });
   };
 
@@ -177,7 +141,7 @@ export default function Level1({ navigation }) {
           <SwipeToMove engine={engine} />
         </View> */}
       </GameEngine>
-      <Button title="LOAD ROOM" onPress={addProblem} />
+      <Button title="LOAD ROOM" onPress={addEntities} />
       {/* <Button title="Play Animation" onPress={this.character.play} /> */}
     </View>
   );
