@@ -3,52 +3,43 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import SpriteSheet from "rn-sprite-sheet";
 
 import Sprite from "./Sprite.js";
-import Images from "./Images.js";
 
-//types of animation: idle, fight-stance
-// const idle = [
-//   {image: require("../images/fireball/idle/tile000.png")},
-//   {image: require("../images/fireball/idle/tile001.png")},
-//   {image: require("../images/fireball/idle/tile002.png")},
-//   {image: require("../images/fireball/idle/tile003.png")},
-// ]
+// animation
+const animate = [
+  { image: require("../images/fireball/FB001.png") },
+  { image: require("../images/fireball/FB002.png") },
+  { image: require("../images/fireball/FB003.png") },
+  { image: require("../images/fireball/FB004.png") },
+  { image: require("../images/fireball/FB005.png") },
+];
 
 //props: x, y, problem
 class Fireball extends Component {
   constructor(props) {
     super(props);
-    this.fireball = null;
-    this.state = {
-      backcolor: this.props.backcolor,
-      animation: this.props.animation,
-    };
-    this.fireball = null;
+    // this.state = {
+    //   animation: this.props.animation,
+    // };
+    this.problem = 1;
   }
 
   fireballStyle = () => {
     return {
-      // backgroundColor: "blue",
-      backgroundColor: this.props.backcolor,
       position: "absolute",
       left: this.props.x,
       top: this.props.y,
-      width: 30,
-      height: 30,
-      // opacity: 0.5,
+      width: 50,
+      height: 50,
     };
   };
 
   getFrame = () => {
-    // let frameLoop = this.props.frame;
-    // switch(this.animation) {
-    //     case "fight-stance":
-    //     case "idle":
-    //         frameLoop %= idle.length;
-    //         return (idle[frameLoop].image);
-    //     default:
-    //         frameLoop %= idle.length;
-    //         return (idle[frameLoop].image);
-    // }
+    let frameLoop = this.props.frame;
+    switch (this.props.animation) {
+      case "idle":
+        frameLoop %= animate.length;
+        return animate[frameLoop].image;
+    }
   };
 
   render() {
@@ -59,11 +50,9 @@ class Fireball extends Component {
           style={{
             width: 80,
             height: 80,
-            position: "absolute",
-            top: this.props.y,
-            left: this.props.x,
+            transform: [{ rotate: "90deg" }],
           }}
-          source={Images.fireball}
+          source={this.getFrame()}
         ></Image>
         <Text>{this.problem}</Text>
       </View>
@@ -71,4 +60,4 @@ class Fireball extends Component {
   }
 }
 
-export default Character;
+export default Fireball;

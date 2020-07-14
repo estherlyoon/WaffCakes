@@ -6,24 +6,28 @@ const { width, height } = Image.resolveAssetSource(Images.door);
 // [DOOR_WIDTH, DOOR_HEIGHT]: Image.resolveAssetSource(Images.door),
 // Image.getSize(myUri, (width, height) => {this.setState({width, height})});
 export default Constants = {
+  WRONG_CHARACTER_X: Dimensions.get("window").width / 2,
+  WRONG_CHARACTER_Y: Dimensions.get("window").height * (2 / 3),
+  RIGHT_CHARACTER_X: Dimensions.get("window").width / 2,
+  RIGHT_CHARACTER_Y: Dimensions.get("window").height / 4,
+  LACKEY_X: Dimensions.get("window").width / 2,
+  LACKEY_Y: Dimensions.get("window").height / 5,
   DOOR_WIDTH: 60,
   DOOR_HEIGHT: 60,
-  MAX_WIDTH: Dimensions.get("screen").width,
-  MAX_HEIGHT: Dimensions.get("screen").height,
+  MAX_WIDTH: Dimensions.get("window").width,
+  MAX_HEIGHT: Dimensions.get("window").height,
   BOARD_SIZE: 15,
   BLOCK_SIZE: 20,
   // (height and width)
   PROBLEM_CONTAINER_SIZE: [
-    Dimensions.get("screen").width,
-    Dimensions.get("screen").height,
+    Dimensions.get("window").width,
+    Dimensions.get("window").height,
   ],
   //locations of answer (top and left)
-  // TOP_ANSWER: [Dimensions.get("screen").width / 2, DOOR_HEIGHT],
-  TOP_ANSWER: [Dimensions.get("screen").width / 2, 0],
-  LEFT_ANSWER: [0, Dimensions.get("screen").height / 4],
-  // RIGHT_ANSWER: [Dimensions.get("screen").width - DOOR_WIDTH, Dimensions.get("screen").height / 4],
+  TOP_ANSWER: [Dimensions.get("window").width / 2, 0],
+  LEFT_ANSWER: [0, Dimensions.get("window").height / 4],
   RIGHT_ANSWER: [
-    Dimensions.get("screen").width - 60,
-    Dimensions.get("screen").height / 4,
+    Dimensions.get("window").width - 60,
+    Dimensions.get("window").height / 4,
   ],
 };
