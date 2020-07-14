@@ -7,10 +7,14 @@ var i = 0;
 var answerCorrect = 0;
 export default function MoveCharacter(entities, { touches, events, dispatch }) {
   let character = entities.character;
+  let lackey = entities.lackey;
+  let fireball = entities.fireball;
 
   //animation purposes
-  if (i % 3 == 0 && typeof character !== "undefined") {
-    character.frame += 1;
+  if (i % 3 == 0) {
+    if (typeof character !== "undefined") character.frame += 1;
+    if (typeof lackey !== "undefined") lackey.frame += 1;
+    if (typeof fireball !== "undefined") fireball.frame += 1;
   }
 
   if (events.length) {

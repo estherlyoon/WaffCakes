@@ -7,6 +7,7 @@ import {
   Button,
   Image,
   ImageBackground,
+  Dimensions,
 } from "react-native";
 import SettingsModal from "../SettingsModal";
 import GestureRecognizer, {
@@ -23,6 +24,8 @@ import Lackey from "../../assets/components/Lackey.js";
 import { GameEngine } from "react-native-game-engine";
 import { add } from "react-native-reanimated";
 import Images from "../../config/Images.js";
+import Constants from "../../config/Constants";
+import Fireball from "../../assets/components/Fireball";
 const onCorrect = (engine) => {
   engine.dispatch("correct-answer-touched");
 };
@@ -55,11 +58,10 @@ export default function Level1({ navigation }) {
   let removeProblem = () => {
     engine.swap({
       character: {
-        x: 175,
-        y: 150,
+        x: Constants.RIGHT_CHARACTER_X,
+        y: Constants.RIGHT_CHARACTER_Y,
         xspeed: 0,
         yspeed: 0,
-        backcolor: "blue",
         frame: 0,
         animation: "idle",
         renderer: <Character />,
@@ -78,11 +80,10 @@ export default function Level1({ navigation }) {
         renderer: <Problem />,
       },
       character: {
-        x: 175,
-        y: 150,
+        x: Constants.RIGHT_CHARACTER_X,
+        y: Constants.RIGHT_CHARACTER_Y,
         xspeed: 0,
         yspeed: 0,
-        backcolor: "blue",
         animation: "idle",
         frame: 0,
         renderer: <Character />,
@@ -92,23 +93,36 @@ export default function Level1({ navigation }) {
 
   let addWrongEntities = () => {
     engine.swap({
-      problem: {
-        engine: engine,
-        difficulty: "medium",
-        onCorrect: () => onCorrect(engine),
-        onIncorrect: () => onIncorrect(engine),
-        renderer: <Problem />,
-      },
-      // character: {
-      //   x: 175,
-      //   y: 250,
-      //   xspeed: 0,
-      //   yspeed: 0,
-      //   backcolor: "pink",
-      //   animation: "fight-stance",
-      //   frame: 0,
-      //   renderer: <Character />,
+      // problem: {
+      //   engine: engine,
+      //   difficulty: "medium",
+      //   onCorrect: () => onCorrect(engine),
+      //   onIncorrect: () => onIncorrect(engine),
+      //   renderer: <Problem />,
       // },
+      character: {
+        x: Constants.WRONG_CHARACTER_X,
+        y: Constants.WRONG_CHARACTER_Y,
+        xspeed: 0,
+        yspeed: 0,
+        animation: "idle",
+        frame: 0,
+        renderer: <Character />,
+      },
+      lackey: {
+        x: Constants.LACKEY_X,
+        y: Constants.LACKEY_Y,
+        animation: "idle",
+        frame: 0,
+        renderer: <Lackey />,
+      },
+      fireball: {
+        x: Constants.LACKEY_X,
+        y: Constants.LACKEY_Y,
+        animation: "idle",
+        frame: 0,
+        renderer: <Fireball />,
+      },
     });
   };
 
@@ -116,7 +130,7 @@ export default function Level1({ navigation }) {
     <View style={styles.levelContainer}>
       <ImageBackground
         style={styles.backgroundImage}
-        source={Images.paperBackground}
+        source={Images.dungeonBackground}
       ></ImageBackground>
       <GameEngine
         //For assigning the engine to a class variable
@@ -154,12 +168,13 @@ const styles = StyleSheet.create({
   },
   gameContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    // position: "absolute",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   backgroundImage: {
     position: "absolute",
-    flex: 1,
+    // flex: 1,
     width: "100%",
     height: "100%",
     justifyContent: "center",
