@@ -16,9 +16,9 @@ class Character extends Component {
   constructor(props) {
     super(props);
     this.character = null;
-    this.state = {
-      animation: this.props.animation,
-    };
+    // this.state = {
+    //   animation: this.props.animation,
+    // };
     this.character = null;
   }
 
@@ -36,7 +36,7 @@ class Character extends Component {
 
   getFrame = () => {
     let frameLoop = this.props.frame;
-    switch (this.animation) {
+    switch (this.props.animation) {
       case "fight-stance":
       case "idle":
         frameLoop %= idle.length;

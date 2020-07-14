@@ -16,7 +16,7 @@ class Lackey extends Component {
     this.lackey = null;
     this.state = {
       backcolor: this.props.backcolor,
-      animation: this.props.animation,
+      //animation: this.props.animation,
     };
     this.lackey = null;
   }
@@ -46,7 +46,7 @@ class Lackey extends Component {
 
   getFrame = () => {
     let frameLoop = this.props.frame;
-    switch (this.animation) {
+    switch (this.props.animation) {
       case "fight-stance":
       case "idle":
         frameLoop %= idle.length;

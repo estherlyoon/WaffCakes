@@ -17,9 +17,9 @@ const animate = [
 class Fireball extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      animation: this.props.animation,
-    };
+    // this.state = {
+    //   animation: this.props.animation,
+    // };
     this.problem = 1;
   }
 
@@ -35,7 +35,7 @@ class Fireball extends Component {
 
   getFrame = () => {
     let frameLoop = this.props.frame;
-    switch (this.animation) {
+    switch (this.props.animation) {
       case "idle":
         frameLoop %= animate.length;
         return animate[frameLoop].image;

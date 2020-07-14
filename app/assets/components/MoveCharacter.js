@@ -11,7 +11,7 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
   let fireball = entities.fireball;
 
   //animation purposes
-  if (i % 3 == 0) {
+  if (i % 6 == 0) {
     if (typeof character !== "undefined") character.frame += 1;
     if (typeof lackey !== "undefined") lackey.frame += 1;
     if (typeof fireball !== "undefined") fireball.frame += 1;
