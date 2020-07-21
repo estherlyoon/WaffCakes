@@ -17,19 +17,26 @@ const animate = [
 class Fireball extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   animation: this.props.animation,
-    // };
-    this.problem = 1;
+    this.state = {
+      a: this.generateRandomNumber(),
+      b: this.generateRandomNumber(),
+      problem: this.generateProblem(),
+    };
+    // this.a = 1;
+    // this.b = 3;
+    // this.problem = this.generateProblem();
   }
+
+  generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
 
   fireballStyle = () => {
     return {
       position: "absolute",
       left: this.props.x,
       top: this.props.y,
-      width: 50,
-      height: 50,
+      width: 100,
+      height: 100,
+      //backgroundColor: "pink",
     };
   };
 
@@ -42,19 +49,60 @@ class Fireball extends Component {
     }
   };
 
+  changeProblem = () => {
+    if (this.props.problemType == "addition") {
+      this.setState({
+        a: this.generateRandomNumber(),
+        b: this.generateRandomNumber(),
+        problem: this.generateProblem(),
+      });
+    }
+  };
+
+  generateProblem = () => {
+    if (this.props.problemType == "addition") return a + " + " + b + " = ?";
+  };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.newProblem && !prevProps.newProblem) {
+      //this.changeProblem();
+      console.log("changing problem");
+      this.setState({
+        a: this.generateRandomNumber(),
+        b: this.generateRandomNumber(),
+        problem: this.generateProblem(),
+      });
+      this.props.newProblem = false;
+    }
+  }
+
   render() {
-    // return <View style={this.fireballStyle()} />;
+    // if (this.props.newProblem) {
+    //console.log("changing problem");
+    //   this.changeProblem;
+
+    //   this.newProblem = false;
+    // }
+    //console.log(this.props.newProblem);
+
     return (
       <View style={this.fireballStyle()}>
         <Image
           style={{
-            width: 80,
-            height: 80,
             transform: [{ rotate: "90deg" }],
+            width: 50,
+            height: 50,
+            alignSelf: "center",
           }}
           source={this.getFrame()}
         ></Image>
-        <Text>{this.problem}</Text>
+        <Text
+          style={{
+            alignSelf: "center",
+          }}
+        >
+          {this.state.problem}
+        </Text>
       </View>
     );
   }

@@ -47,6 +47,7 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
     }
   }
 
+  // moving character
   if (i % 6 === 0) {
     if (typeof character !== "undefined") {
       if (character.x <= Constants.LEFT_ANSWER[0] + Constants.DOOR_WIDTH) {
@@ -76,6 +77,22 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
       }
     }
   }
+
+  // moving fireball
+  if (i % 10 === 0 && typeof fireball !== "undefined") {
+    // if player types in correct answer, generate new fireball with new problem
+
+    // when fireball reaches character, generate new fireball with new problem
+    if (character.y - fireball.y < 15) {
+      fireball.y = lackey.y + 10;
+      fireball.newProblem = true;
+      console.log(fireball.newProblem);
+    } // otherwise, move towards character
+    else {
+      fireball.y += 10;
+    }
+  }
+
   i++;
   return entities;
 }
