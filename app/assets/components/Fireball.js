@@ -20,14 +20,9 @@ class Fireball extends Component {
     this.state = {
       a: this.generateRandomNumber(),
       b: this.generateRandomNumber(),
-      problem: this.generateProblem(),
+      problem: this.generateRandomNumber(), //this.generateProblem(),
     };
-    // this.a = 1;
-    // this.b = 3;
-    // this.problem = this.generateProblem();
   }
-
-  generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
 
   fireballStyle = () => {
     return {
@@ -49,41 +44,42 @@ class Fireball extends Component {
     }
   };
 
-  changeProblem = () => {
-    if (this.props.problemType == "addition") {
-      this.setState({
-        a: this.generateRandomNumber(),
-        b: this.generateRandomNumber(),
-        problem: this.generateProblem(),
-      });
-    }
-  };
+  generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
 
   generateProblem = () => {
-    if (this.props.problemType == "addition") return a + " + " + b + " = ?";
+    Math.floor(Math.random() * 100) + 1; //if (this.props.problemType == "addition") return a + " + " + b + " = ?";
   };
 
-  componentDidUpdate(prevProps) {
+  // changeProblem = () => {
+  //   if (this.props.problemType == "addition") {
+  //     this.setState({
+  //       a: this.generateRandomNumber(),
+  //       b: this.generateRandomNumber(),
+  //       problem: this.generateRandomNumber(), //this.generateProblem(),
+  //     });
+  //   }
+  // };
+
+  // changes problem when newProblem boolean is set to true in MoveCharacter
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.newProblem && !prevProps.newProblem) {
       //this.changeProblem();
       console.log("changing problem");
+      console.log("a type: " + typeof a);
+      console.log("b type: " + typeof b);
+      console.log("problem type: " + typeof problem);
+
       this.setState({
         a: this.generateRandomNumber(),
         b: this.generateRandomNumber(),
-        problem: this.generateProblem(),
+        problem: this.generateRandomNumber(), //Problem(),
       });
       this.props.newProblem = false;
     }
   }
 
   render() {
-    // if (this.props.newProblem) {
-    //console.log("changing problem");
-    //   this.changeProblem;
-
-    //   this.newProblem = false;
-    // }
-    //console.log(this.props.newProblem);
+    console.log("init problem type: " + typeof problem);
 
     return (
       <View style={this.fireballStyle()}>

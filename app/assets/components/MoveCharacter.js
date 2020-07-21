@@ -86,7 +86,6 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
     if (character.y - fireball.y < 15) {
       fireball.y = lackey.y + 10;
       fireball.newProblem = true;
-      console.log(fireball.newProblem);
     } // otherwise, move towards character
     else {
       fireball.y += 10;
