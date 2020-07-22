@@ -13,14 +13,13 @@ const animate = [
   { image: require("../images/fireball/FB005.png") },
 ];
 
-//props: x, y, problem
 class Fireball extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      a: this.generateRandomNumber(),
+      //a: this.generateRandomNumber(),
       b: this.generateRandomNumber(),
-      problem: this.generateRandomNumber(), //this.generateProblem(),
+      prob: this.generateProblem(),
     };
   }
 
@@ -47,7 +46,8 @@ class Fireball extends Component {
   generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
 
   generateProblem = () => {
-    Math.floor(Math.random() * 100) + 1; //if (this.props.problemType == "addition") return a + " + " + b + " = ?";
+    if (this.props.problemType == "addition")
+      return "" + a + " + " + b + " = ?";
   };
 
   // changeProblem = () => {
@@ -62,25 +62,22 @@ class Fireball extends Component {
 
   // changes problem when newProblem boolean is set to true in MoveCharacter
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.newProblem && !prevProps.newProblem) {
+    if (this.props.problemSeed != prevProps.problemSeed) {
       //this.changeProblem();
       console.log("changing problem");
-      console.log("a type: " + typeof a);
-      console.log("b type: " + typeof b);
-      console.log("problem type: " + typeof problem);
 
       this.setState({
         a: this.generateRandomNumber(),
         b: this.generateRandomNumber(),
-        problem: this.generateRandomNumber(), //Problem(),
+        prob: this.state.a + " + " + this.state.b + " = ?",
       });
-      this.props.newProblem = false;
+      //this.props.newProblem = false;
     }
   }
 
   render() {
-    console.log("init problem type: " + typeof problem);
-
+    //console.log("problemSeed: " + this.props.problemSeed);
+    //console.log("prob: " + this.state.prob);
     return (
       <View style={this.fireballStyle()}>
         <Image
@@ -97,7 +94,7 @@ class Fireball extends Component {
             alignSelf: "center",
           }}
         >
-          {this.state.problem}
+          {this.state.prob}
         </Text>
       </View>
     );

@@ -85,7 +85,7 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
     // when fireball reaches character, generate new fireball with new problem
     if (character.y - fireball.y < 15) {
       fireball.y = lackey.y + 10;
-      fireball.newProblem = true;
+      fireball.problemSeed += 1;
     } // otherwise, move towards character
     else {
       fireball.y += 10;
