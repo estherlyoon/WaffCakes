@@ -13,14 +13,14 @@ const animate = [
   { image: require("../images/fireball/FB005.png") },
 ];
 
-//props: x, y, problem
 class Fireball extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   animation: this.props.animation,
-    // };
-    this.problem = 1;
+    this.state = {
+      //a: this.generateRandomNumber(),
+      b: this.generateRandomNumber(),
+      prob: this.generateProblem(),
+    };
   }
 
   fireballStyle = () => {
@@ -28,8 +28,9 @@ class Fireball extends Component {
       position: "absolute",
       left: this.props.x,
       top: this.props.y,
-      width: 50,
-      height: 50,
+      width: 100,
+      height: 100,
+      //backgroundColor: "pink",
     };
   };
 
@@ -42,19 +43,59 @@ class Fireball extends Component {
     }
   };
 
+  generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
+
+  generateProblem = () => {
+    if (this.props.problemType == "addition")
+      return "" + a + " + " + b + " = ?";
+  };
+
+  // changeProblem = () => {
+  //   if (this.props.problemType == "addition") {
+  //     this.setState({
+  //       a: this.generateRandomNumber(),
+  //       b: this.generateRandomNumber(),
+  //       problem: this.generateRandomNumber(), //this.generateProblem(),
+  //     });
+  //   }
+  // };
+
+  // changes problem when newProblem boolean is set to true in MoveCharacter
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.problemSeed != prevProps.problemSeed) {
+      //this.changeProblem();
+      console.log("changing problem");
+
+      this.setState({
+        a: this.generateRandomNumber(),
+        b: this.generateRandomNumber(),
+        prob: this.state.a + " + " + this.state.b + " = ?",
+      });
+      //this.props.newProblem = false;
+    }
+  }
+
   render() {
-    // return <View style={this.fireballStyle()} />;
+    //console.log("problemSeed: " + this.props.problemSeed);
+    //console.log("prob: " + this.state.prob);
     return (
       <View style={this.fireballStyle()}>
         <Image
           style={{
-            width: 80,
-            height: 80,
             transform: [{ rotate: "90deg" }],
+            width: 50,
+            height: 50,
+            alignSelf: "center",
           }}
           source={this.getFrame()}
         ></Image>
-        <Text>{this.problem}</Text>
+        <Text
+          style={{
+            alignSelf: "center",
+          }}
+        >
+          {this.state.prob}
+        </Text>
       </View>
     );
   }

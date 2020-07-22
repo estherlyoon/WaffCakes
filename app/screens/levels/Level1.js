@@ -121,6 +121,8 @@ export default function Level1({ navigation }) {
         y: Constants.LACKEY_Y,
         animation: "idle",
         frame: 0,
+        problemSeed: 0,
+        problemType: "addition",
         renderer: <Fireball />,
       },
     });

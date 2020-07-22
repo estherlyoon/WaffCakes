@@ -7,11 +7,11 @@ const { width, height } = Image.resolveAssetSource(Images.door);
 // Image.getSize(myUri, (width, height) => {this.setState({width, height})});
 export default Constants = {
   WRONG_CHARACTER_X: Dimensions.get("window").width / 2,
-  WRONG_CHARACTER_Y: Dimensions.get("window").height * (2 / 3),
+  WRONG_CHARACTER_Y: Dimensions.get("window").height * (1 / 2),
   RIGHT_CHARACTER_X: Dimensions.get("window").width / 2,
   RIGHT_CHARACTER_Y: Dimensions.get("window").height / 4,
   LACKEY_X: Dimensions.get("window").width / 2,
-  LACKEY_Y: Dimensions.get("window").height / 5,
+  LACKEY_Y: Dimensions.get("window").height / 6,
   DOOR_WIDTH: 60,
   DOOR_HEIGHT: 60,
   MAX_WIDTH: Dimensions.get("window").width,
