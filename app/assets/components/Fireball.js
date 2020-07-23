@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
-import SpriteSheet from "rn-sprite-sheet";
+import AnswerInput from "./AnswerInput";
 
 import Sprite from "./Sprite.js";
 
@@ -17,7 +17,8 @@ class Fireball extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //a: this.generateRandomNumber(),
+      a: this.generateRandomNumber(),
+      ans: a + b, //change later
       b: this.generateRandomNumber(),
       prob: this.generateProblem(),
     };
@@ -69,6 +70,7 @@ class Fireball extends Component {
       this.setState({
         a: this.generateRandomNumber(),
         b: this.generateRandomNumber(),
+        ans: this.state.a + this.state.b,
         prob: this.state.a + " + " + this.state.b + " = ?",
       });
       //this.props.newProblem = false;
@@ -79,23 +81,28 @@ class Fireball extends Component {
     //console.log("problemSeed: " + this.props.problemSeed);
     //console.log("prob: " + this.state.prob);
     return (
-      <View style={this.fireballStyle()}>
-        <Image
-          style={{
-            transform: [{ rotate: "90deg" }],
-            width: 50,
-            height: 50,
-            alignSelf: "center",
-          }}
-          source={this.getFrame()}
-        ></Image>
-        <Text
-          style={{
-            alignSelf: "center",
-          }}
-        >
-          {this.state.prob}
-        </Text>
+      <View>
+        <View style={this.fireballStyle()}>
+          <Image
+            style={{
+              transform: [{ rotate: "90deg" }],
+              width: 50,
+              height: 50,
+              alignSelf: "center",
+            }}
+            source={this.getFrame()}
+          ></Image>
+          <Text
+            style={{
+              alignSelf: "center",
+            }}
+          >
+            {this.state.prob}
+          </Text>
+        </View>
+        <View style = {{position: "absolute", top: 700, left: 100}}>
+          <AnswerInput engine = {this.props.engine} answer = {this.state.ans}/>
+        </View>
       </View>
     );
   }

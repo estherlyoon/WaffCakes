@@ -20,6 +20,7 @@ import MoveCharacter from "../../assets/components/MoveCharacter.js";
 import Problem from "../../assets/components/Problem.js";
 import SwipeToMove from "../../assets/components/SwipeToMove.js";
 import Lackey from "../../assets/components/Lackey.js";
+import Health from "../../assets/components/Health.js";
 
 import { GameEngine } from "react-native-game-engine";
 import { add } from "react-native-reanimated";
@@ -52,7 +53,10 @@ export default function Level1({ navigation }) {
       console.log("onEvent incorrect answer found");
       removeProblem();
       addWrongEntities();
+    } else if(e === "gameover"){
+      console.log("GAME OVER");
     }
+
   };
 
   let removeProblem = () => {
@@ -117,6 +121,7 @@ export default function Level1({ navigation }) {
         renderer: <Lackey />,
       },
       fireball: {
+        engine: engine,
         x: Constants.LACKEY_X,
         y: Constants.LACKEY_Y,
         animation: "idle",
@@ -125,6 +130,20 @@ export default function Level1({ navigation }) {
         problemType: "addition",
         renderer: <Fireball />,
       },
+      health: {
+        entity: "Your",
+        x: 50,
+        y: 100,
+        health: 3,
+        renderer: <Health/>,
+      },
+      enemyHealth: {
+        entity: "Enemy",
+        x: 250,
+        y: 100,
+        health: 3,
+        renderer: <Health/>
+      }
     });
   };
 

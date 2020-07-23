@@ -9,6 +9,7 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
   let character = entities.character;
   let lackey = entities.lackey;
   let fireball = entities.fireball;
+  let health = entities.health;
 
   //animation purposes
   if (i % 6 == 0) {
@@ -86,11 +87,18 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
     if (character.y - fireball.y < 15) {
       fireball.y = lackey.y + 10;
       fireball.problemSeed += 1;
+      //handle game over 
+      health.health -= 1;
+      if(health.health == 0){
+        dispatch("gameover");
+      } 
     } // otherwise, move towards character
     else {
       fireball.y += 10;
     }
   }
+
+  
 
   i++;
   return entities;
