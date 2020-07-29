@@ -18,8 +18,8 @@ class Fireball extends Component {
     super(props);
     this.state = {
       a: this.generateRandomNumber(),
-      ans: a + b, //change later
       b: this.generateRandomNumber(),
+      answer: a + b, //change later
       prob: this.generateProblem(),
     };
   }
@@ -51,17 +51,7 @@ class Fireball extends Component {
       return "" + a + " + " + b + " = ?";
   };
 
-  // changeProblem = () => {
-  //   if (this.props.problemType == "addition") {
-  //     this.setState({
-  //       a: this.generateRandomNumber(),
-  //       b: this.generateRandomNumber(),
-  //       problem: this.generateRandomNumber(), //this.generateProblem(),
-  //     });
-  //   }
-  // };
-
-  // changes problem when newProblem boolean is set to true in MoveCharacter
+  // changes problem when newProblem boolean is set to true in GameLoop
   componentDidUpdate(prevProps, prevState) {
     if (this.props.problemSeed != prevProps.problemSeed) {
       //this.changeProblem();
@@ -70,7 +60,7 @@ class Fireball extends Component {
       this.setState({
         a: this.generateRandomNumber(),
         b: this.generateRandomNumber(),
-        ans: this.state.a + this.state.b,
+        answer: this.state.a + this.state.b,
         prob: this.state.a + " + " + this.state.b + " = ?",
       });
       //this.props.newProblem = false;
@@ -100,8 +90,8 @@ class Fireball extends Component {
             {this.state.prob}
           </Text>
         </View>
-        <View style = {{position: "absolute", top: 700, left: 100}}>
-          <AnswerInput engine = {this.props.engine} answer = {this.state.ans}/>
+        <View style={{ position: "absolute", top: 700, left: 100 }}>
+          <AnswerInput engine={this.props.engine} answer={this.state.answer} />
         </View>
       </View>
     );

@@ -16,7 +16,7 @@ import GestureRecognizer, {
 
 import Colors from "../../config/Colors.js";
 import Character from "../../assets/components/Character.js";
-import MoveCharacter from "../../assets/components/MoveCharacter.js";
+import GameLoop from "../../assets/components/GameLoop.js";
 import Problem from "../../assets/components/Problem.js";
 import SwipeToMove from "../../assets/components/SwipeToMove.js";
 import Lackey from "../../assets/components/Lackey.js";
@@ -27,6 +27,7 @@ import { add } from "react-native-reanimated";
 import Images from "../../config/Images.js";
 import Constants from "../../config/Constants";
 import Fireball from "../../assets/components/Fireball";
+import AnswerInput from "../../assets/components/AnswerInput";
 const onCorrect = (engine) => {
   engine.dispatch("correct-answer-touched");
 };
@@ -53,10 +54,15 @@ export default function Level1({ navigation }) {
       console.log("onEvent incorrect answer found");
       removeProblem();
       addWrongEntities();
-    } else if(e === "gameover"){
+    } else if (e === "lackey-correct") {
+      // TODO: new fireball, if lackey health = 0 then new entities (other cases handle in loop)
+      engine.dispatch("lackey-correct");
+    } else if (e === "lackey-incorrect") {
+      // TODO: if your health = 0, uhh you die
+      engine.dispatch("lackey-incorrect");
+    } else if (e === "gameover") {
       console.log("GAME OVER");
     }
-
   };
 
   let removeProblem = () => {
@@ -130,20 +136,21 @@ export default function Level1({ navigation }) {
         problemType: "addition",
         renderer: <Fireball />,
       },
-      health: {
+      characterHealth: {
         entity: "Your",
+        engine: engine,
         x: 50,
         y: 100,
         health: 3,
-        renderer: <Health/>,
+        renderer: <Health />,
       },
-      enemyHealth: {
+      lackeyHealth: {
         entity: "Enemy",
         x: 250,
         y: 100,
         health: 3,
-        renderer: <Health/>
-      }
+        renderer: <Health />,
+      },
     });
   };
 
@@ -158,7 +165,7 @@ export default function Level1({ navigation }) {
         ref={setEngine}
         style={styles.gameContainer}
         //For specifying what the game loop is going to be
-        systems={[MoveCharacter]}
+        systems={[GameLoop]}
         //The new objects on the screen
         entities={{
           character: {
