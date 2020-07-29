@@ -5,11 +5,12 @@ var i = 0;
 
 //1 if correct, -1 if incorrect, 0 if not set, gets reset with new problem
 var answerCorrect = 0;
-export default function MoveCharacter(entities, { touches, events, dispatch }) {
+export default function GameLoop(entities, { touches, events, dispatch }) {
   let character = entities.character;
   let lackey = entities.lackey;
   let fireball = entities.fireball;
-  let health = entities.health;
+  let characterHealth = entities.characterHealth;
+  let lackeyHealth = entities.lackeyHealth;
 
   //animation purposes
   if (i % 6 == 0) {
@@ -43,6 +44,16 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
         } else if (events[i] === "move-right") {
           character.xspeed = 5;
           character.yspeed = 0;
+        }
+      }
+      // handle lackey battle
+      if (typeof lackey !== "undefined") {
+        if (events[i] === "lackey-correct") {
+          lackeyHealth.health -= 1;
+          fireball.y = lackey.y + 10;
+          fireball.problemSeed += 1;
+        } else if (events[i] === "lackey-incorrect") {
+          // might not need
         }
       }
     }
@@ -81,24 +92,22 @@ export default function MoveCharacter(entities, { touches, events, dispatch }) {
 
   // moving fireball
   if (i % 10 === 0 && typeof fireball !== "undefined") {
-    // if player types in correct answer, generate new fireball with new problem
+    // if player types in correct answer, generate new fireball with new problem and - lackey health
 
-    // when fireball reaches character, generate new fireball with new problem
+    // when fireball reaches character, generate new fireball with new problem and - character health
     if (character.y - fireball.y < 15) {
       fireball.y = lackey.y + 10;
       fireball.problemSeed += 1;
-      //handle game over 
-      health.health -= 1;
-      if(health.health == 0){
-        dispatch("gameover");
-      } 
+      //handle game over
+      characterHealth.health -= 1;
+      if (characterHealth.health == 0) {
+        dispatch("gameover"); // battleover instead? TODO-- gameover if out of lives?
+      }
     } // otherwise, move towards character
     else {
       fireball.y += 10;
     }
   }
-
-  
 
   i++;
   return entities;

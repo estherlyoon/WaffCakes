@@ -6,7 +6,7 @@ import GestureRecognizer, {
 } from "react-native-swipe-gestures";
 
 import Character from "../../assets/components/Character.js";
-import MoveCharacter from "../../assets/components/MoveCharacter.js";
+import GameLoop from "../../assets/components/GameLoop.js";
 import Problem from "../../assets/components/Problem.js";
 import SwipeToMove from "../../assets/components/SwipeToMove.js";
 
@@ -29,7 +29,7 @@ export default function Level2({ navigation }) {
         ref={(ref) => setEngine(ref)}
         style={styles.gameContainer}
         //For specifying what the game loop is going to be
-        systems={[MoveCharacter]}
+        systems={[GameLoop]}
         //The new objects on the screen
         entities={{
           character: {

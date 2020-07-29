@@ -19,7 +19,6 @@ class Character extends Component {
     // this.state = {
     //   animation: this.props.animation,
     // };
-    this.character = null;
   }
 
   characterStyle = () => {
@@ -48,7 +47,6 @@ class Character extends Component {
   };
 
   render() {
-    // return <View style={this.characterStyle()} />;
     return (
       <View style={this.characterStyle()}>
         <Image
