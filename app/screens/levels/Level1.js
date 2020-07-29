@@ -54,12 +54,6 @@ export default function Level1({ navigation }) {
       console.log("onEvent incorrect answer found");
       removeProblem();
       addWrongEntities();
-    } else if (e === "lackey-correct") {
-      // TODO: new fireball, if lackey health = 0 then new entities (other cases handle in loop)
-      engine.dispatch("lackey-correct");
-    } else if (e === "lackey-incorrect") {
-      // TODO: if your health = 0, uhh you die
-      engine.dispatch("lackey-incorrect");
     } else if (e === "gameover") {
       console.log("GAME OVER");
     }
