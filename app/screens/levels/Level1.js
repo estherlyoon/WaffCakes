@@ -37,6 +37,9 @@ const onIncorrect = (engine) => {
 };
 
 export default function Level1({ navigation }) {
+  // changes to false when game is over
+  const [running, setRunning] = useState(true);
+
   let engine = null;
   const setEngine = (ref) => {
     engine = ref;
@@ -56,6 +59,7 @@ export default function Level1({ navigation }) {
       addWrongEntities();
     } else if (e === "gameover") {
       console.log("GAME OVER");
+      setRunning(false);
     }
   };
 
@@ -170,6 +174,7 @@ export default function Level1({ navigation }) {
         }}
         //Sending events outs
         onEvent={onEvent}
+        running={running}
       >
         <SettingsModal navigation={navigation} />
         <StatusBar hidden={true} />
