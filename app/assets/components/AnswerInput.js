@@ -23,6 +23,7 @@ const AnswerInput = ({ engine, answer }) => {
       placeholderTextColor="blue"
       onChangeText={(text) => setInput(text)}
       onSubmitEditing={checkAnswer}
+      blurOnSubmit={false}
       value={input}
     />
   );

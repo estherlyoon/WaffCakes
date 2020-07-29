@@ -27,7 +27,8 @@ import { add } from "react-native-reanimated";
 import Images from "../../config/Images.js";
 import Constants from "../../config/Constants";
 import Fireball from "../../assets/components/Fireball";
-import AnswerInput from "../../assets/components/AnswerInput";
+import GameOverModal from "../../assets/components/GameOverModal";
+
 const onCorrect = (engine) => {
   engine.dispatch("correct-answer-touched");
 };
@@ -60,6 +61,7 @@ export default function Level1({ navigation }) {
     } else if (e === "gameover") {
       console.log("GAME OVER");
       setRunning(false);
+      //navigation.navigate("Home")
     }
   };
 
@@ -182,6 +184,7 @@ export default function Level1({ navigation }) {
           <SwipeToMove engine={engine} />
         </View> */}
       </GameEngine>
+      <GameOverModal isVisible = {!running} navigation = {navigation}/>
       <Button title="LOAD ROOM" onPress={addEntities} />
       {/* <Button title="Play Animation" onPress={this.character.play} /> */}
     </View>
