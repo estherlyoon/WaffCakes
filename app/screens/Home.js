@@ -35,6 +35,10 @@ const openSettings = () => {
 function LevelNavigation({ navigation }) {
   return (
     <SafeAreaView>
+      <Button
+        title={"Back"}
+        onPress={() => navigation.navigate("Title")}
+      ></Button>
       <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
       <Button
         title={"Level 1 B)"}
@@ -66,14 +70,13 @@ function Home() {
       <Stack.Screen
           name="Title"
           component={TitleScreen}
-          options={{ title: "Main Menu" }}
         />
         <Stack.Screen
           name="Home"
           component={LevelNavigation}
-          options={{ title: "Main Menu" }}
+          options={{ title: "Main Menu", gestureEnabled: false }}
         />
-        <Stack.Screen name="Level1" component={Level1} />
+        <Stack.Screen name="Level1" component={Level1} options={{gestureEnabled: false }}/>
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
         {/* <Stack.Screen name="Level1" component={Level1} /> */}
