@@ -26,7 +26,6 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.9",
-    "react-navigation-transitions": "^1.0.12",
     "rn-sprite-sheet": "^1.1.9",
     "shuffle-array": "^1.0.1"
   },
