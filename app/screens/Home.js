@@ -20,6 +20,7 @@ import SettingsModal from "./SettingsModal";
 import Level1 from "./levels/Level1.js";
 import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
+import TitleScreen from "./TitleScreen";
 
 //Ask Ashwin about importing all files from folder
 // import Level1 from "./levels/Level1";
@@ -52,9 +53,21 @@ function LevelNavigation({ navigation }) {
 }
 
 export default function App() {
+
+  return (
+    <Home/>
+  );
+}
+
+function Home() {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
+      <Stack.Screen
+          name="Title"
+          component={TitleScreen}
+          options={{ title: "Main Menu" }}
+        />
         <Stack.Screen
           name="Home"
           component={LevelNavigation}
