@@ -7,12 +7,14 @@ import {
   SafeAreaView,
   Button,
   Image,
+  ImageBackground,
+  Dimensions
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
 import { useState } from "react";
-import { TouchableHighlight } from "react-native-gesture-handler";
+import { TouchableHighlight, ScrollView } from "react-native-gesture-handler";
 
 import Settings from "./Settings";
 import SettingsPopup from "./SettingsPopup";
@@ -32,31 +34,35 @@ const Stack = createStackNavigator();
 const openSettings = () => {
   console.log("Open Settings");
 };
+const levelmap = '../assets/images/levelmap.png';
 
 function LevelNavigation({ navigation }) {
   return (
     <View style={styles.container}>
-      <SafeAreaView>
         <FadeView initial = {0} final = {1}>
-          <Button
-            title={"Back"}
-            onPress={() => navigation.navigate("Title")}
-          ></Button>
-          <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
-          <Button
-            title={"Level 1 B)"}
-            onPress={() => navigation.navigate("Level1", { nameParam: "Jane" })}
-          ></Button>
-          <Button
-            title={"Level 2 :P"}
-            onPress={() => navigation.navigate("Level2", { nameParam: "Jane" })}
-          ></Button>
-          <Button
-            title={"Level 3 >:)"}
-            onPress={() => navigation.navigate("Level3", { nameParam: "Jane" })}
-          ></Button>
+          <ImageBackground style = {styles.background} source = {require(levelmap)}>
+          <View style = {styles.header}/>
+          
+            <Button
+              title={"Back"}
+              onPress={() => navigation.navigate("Title")}
+            ></Button>
+            <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
+            <Button
+              title={"Level 1 B)"}
+              onPress={() => navigation.navigate("Level1", { nameParam: "Jane" })}
+            ></Button>
+            <Button
+              title={"Level 2 :P"}
+              onPress={() => navigation.navigate("Level2", { nameParam: "Jane" })}
+            ></Button>
+            <Button
+              title={"Level 3 >:)"}
+              onPress={() => navigation.navigate("Level3", { nameParam: "Jane" })}
+            ></Button>
+
+          </ImageBackground>
         </FadeView>
-      </SafeAreaView>
     </View>
   );
 }
@@ -91,6 +97,15 @@ function Home() {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    height: 50,
+  },
+  background: {
+    width: Dimensions.get('window').width,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+},
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
@@ -107,6 +122,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: 'black',
   },
   settings: {
     alignItems: "flex-start",
