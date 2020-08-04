@@ -21,6 +21,7 @@ import Level1 from "./levels/Level1.js";
 import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
+import FadeView from "../assets/components/FadeView";
 
 //Ask Ashwin about importing all files from folder
 // import Level1 from "./levels/Level1";
@@ -34,25 +35,29 @@ const openSettings = () => {
 
 function LevelNavigation({ navigation }) {
   return (
-    <SafeAreaView>
-      <Button
-        title={"Back"}
-        onPress={() => navigation.navigate("Title")}
-      ></Button>
-      <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
-      <Button
-        title={"Level 1 B)"}
-        onPress={() => navigation.navigate("Level1", { nameParam: "Jane" })}
-      ></Button>
-      <Button
-        title={"Level 2 :P"}
-        onPress={() => navigation.navigate("Level2", { nameParam: "Jane" })}
-      ></Button>
-      <Button
-        title={"Level 3 >:)"}
-        onPress={() => navigation.navigate("Level3", { nameParam: "Jane" })}
-      ></Button>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <SafeAreaView>
+        <FadeView initial = {0} final = {1}>
+          <Button
+            title={"Back"}
+            onPress={() => navigation.navigate("Title")}
+          ></Button>
+          <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
+          <Button
+            title={"Level 1 B)"}
+            onPress={() => navigation.navigate("Level1", { nameParam: "Jane" })}
+          ></Button>
+          <Button
+            title={"Level 2 :P"}
+            onPress={() => navigation.navigate("Level2", { nameParam: "Jane" })}
+          ></Button>
+          <Button
+            title={"Level 3 >:)"}
+            onPress={() => navigation.navigate("Level3", { nameParam: "Jane" })}
+          ></Button>
+        </FadeView>
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -100,7 +105,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

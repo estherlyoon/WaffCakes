@@ -1,34 +1,49 @@
 import React from 'react'
-import { View, StyleSheet, Text, ImageBackground, Dimensions, TouchableOpacity, Image } from 'react-native'
+import { View, 
+        StyleSheet, 
+        Text, 
+        ImageBackground, 
+        Dimensions, 
+        TouchableOpacity, 
+        Image,
+        Animated
+    } from 'react-native'
+
+import FadeView from '../assets/components/FadeView';
 
 const screen = '../assets/images/titlescreen.png';
 const button = '../assets/images/button.png';
 
+
 const TitleScreen = ({navigation}) => {
     return (
+
         <View style = {styles.container}>
-            <ImageBackground style = {styles.background} source = {require(screen)}>
-                <View style={styles.innerContainer}>
+            <FadeView initial = {0} final = {1}>
 
-                    <View>
-                        <Text style={{fontSize:100, color:'white'}}>TITLE</Text>
+                <ImageBackground style = {styles.background} source = {require(screen)}>
+                    <View style={styles.innerContainer}>
+
+                        <View>
+                            <Text style={{fontSize:100, color:'white'}}>TITLE</Text>
+                        </View>
+                        <View>
+                            <TouchableOpacity onPress={()=> navigation.navigate({ name: 'Home'})}>
+                                <ImageBackground style={styles.button} source = {require(button)}>
+                                    <Text style={styles.buttonText}>START</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={()=> navigation.navigate({ name: 'Home'})}>
+                                <ImageBackground style={styles.button} source = {require(button)}>
+                                    <Text style={styles.buttonText}>CREDITS</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View>
-                        <TouchableOpacity onPress={()=> navigation.navigate({ name: 'Home'})}>
-                            <ImageBackground style={styles.button} source = {require(button)}>
-                                <Text style={styles.buttonText}>START</Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
 
-                        <TouchableOpacity onPress={()=> navigation.navigate({ name: 'Home'})}>
-                            <ImageBackground style={styles.button} source = {require(button)}>
-                                <Text style={styles.buttonText}>CREDITS</Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-            </ImageBackground>
+                </ImageBackground>
+            </FadeView>
         </View>
     );
 
@@ -43,6 +58,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        backgroundColor: 'black',
     },
     innerContainer: {
         flex: 1,
