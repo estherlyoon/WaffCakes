@@ -1,4 +1,4 @@
-import { TextInput, View, Text, Platform} from "react-native";
+import { TextInput, View, Text, Platform, KeyboardAvoidingView} from "react-native";
 import React, { useState } from "react";
 
 const AnswerInput = ({ engine, answer }) => {
@@ -17,16 +17,18 @@ const AnswerInput = ({ engine, answer }) => {
   };
 
   return (
-    <TextInput
-      keyboardType={Platform.OS == 'android' ? "numeric" : "default"}
-      style={{ fontSize: 40 }}
-      placeholder="Answer"
-      placeholderTextColor="blue"
-      onChangeText={(text) => setInput(text)}
-      onSubmitEditing={checkAnswer}
-      blurOnSubmit={false}
-      value={input}
-    />
+
+      <TextInput
+        // keyboardType={Platform.OS == 'android' ? "numeric" : "default"}
+        style={{ fontSize: 40 }}
+        placeholder="Answer"
+        placeholderTextColor="blue"
+        onChangeText={(text) => setInput(text)}
+        onSubmitEditing={checkAnswer}
+        blurOnSubmit={false}
+        value={input}
+        autoFocus={true}
+      />
   );
 };
 
