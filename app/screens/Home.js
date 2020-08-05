@@ -7,12 +7,14 @@ import {
   SafeAreaView,
   Button,
   Image,
+  ImageBackground,
+  Dimensions
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
 import { useState } from "react";
-import { TouchableHighlight } from "react-native-gesture-handler";
+import { TouchableHighlight, ScrollView } from "react-native-gesture-handler";
 
 import Settings from "./Settings";
 import SettingsPopup from "./SettingsPopup";
@@ -20,6 +22,8 @@ import SettingsModal from "./SettingsModal";
 import Level1 from "./levels/Level1.js";
 import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
+import TitleScreen from "./TitleScreen";
+import FadeView from "../assets/components/FadeView";
 
 //Ask Ashwin about importing all files from folder
 // import Level1 from "./levels/Level1";
@@ -30,37 +34,60 @@ const Stack = createStackNavigator();
 const openSettings = () => {
   console.log("Open Settings");
 };
+const levelmap = '../assets/images/levelmap.png';
 
 function LevelNavigation({ navigation }) {
   return (
-    <SafeAreaView>
-      <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
-      <Button
-        title={"Level 1 B)"}
-        onPress={() => navigation.navigate("Level1", { nameParam: "Jane" })}
-      ></Button>
-      <Button
-        title={"Level 2 :P"}
-        onPress={() => navigation.navigate("Level2", { nameParam: "Jane" })}
-      ></Button>
-      <Button
-        title={"Level 3 >:)"}
-        onPress={() => navigation.navigate("Level3", { nameParam: "Jane" })}
-      ></Button>
-    </SafeAreaView>
+    <View style={styles.container}>
+        <FadeView initial = {0} final = {1}>
+          <ImageBackground style = {styles.background} source = {require(levelmap)}>
+          <View style = {styles.header}/>
+          
+            <Button
+              title={"Back"}
+              onPress={() => navigation.navigate("Title")}
+            ></Button>
+            <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
+            <Button
+              title={"Level 1 B)"}
+              onPress={() => navigation.navigate("Level1", { nameParam: "Jane" })}
+            ></Button>
+            <Button
+              title={"Level 2 :P"}
+              onPress={() => navigation.navigate("Level2", { nameParam: "Jane" })}
+            ></Button>
+            <Button
+              title={"Level 3 >:)"}
+              onPress={() => navigation.navigate("Level3", { nameParam: "Jane" })}
+            ></Button>
+
+          </ImageBackground>
+        </FadeView>
+    </View>
   );
 }
 
 export default function App() {
+
+  return (
+    <Home/>
+  );
+}
+
+function Home() {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
+      <Stack.Screen
+          name="Title"
+          component={TitleScreen}
+        />
         <Stack.Screen
           name="Home"
           component={LevelNavigation}
-          options={{ title: "Main Menu" }}
+          options={{ title: "Main Menu", gestureEnabled: false }}
         />
-        <Stack.Screen name="Level1" component={Level1} />
+        <Stack.Screen name="Level1" component={Level1} options={{gestureEnabled: false }}/>
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
         {/* <Stack.Screen name="Level1" component={Level1} /> */}
@@ -70,6 +97,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    height: 50,
+  },
+  background: {
+    width: Dimensions.get('window').width,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+},
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
@@ -84,9 +120,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: 'black',
   },
   settings: {
     alignItems: "flex-start",

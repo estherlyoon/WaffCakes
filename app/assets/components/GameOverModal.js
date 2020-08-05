@@ -12,7 +12,9 @@ const GameOverModal = ({isVisible, navigation}) => {
                 <View style = {styles.modalView}>
                     <Text style = {styles.gameover}>GAME OVER</Text>
                     <View>
-                        <TouchableOpacity style = {styles.openButton}>
+                        <TouchableOpacity style = {styles.openButton}
+                        
+                        >
                             <Text style={styles.modalText}>Retry</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style = {styles.openButton}
