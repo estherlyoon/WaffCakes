@@ -32,4 +32,5 @@ export default Constants = {
   ],
   LEVEL_ROOMS: 3,
   FIREBALL_SPEED: 1,
+  DISREGARD: 0,
 };
