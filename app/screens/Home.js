@@ -35,6 +35,7 @@ const openSettings = () => {
   console.log("Open Settings");
 };
 const levelmap = '../assets/images/levelmap.png';
+const boss = '../assets/images/boss/bossicon.png';
 
 function LevelNavigation({ navigation }) {
   return (
@@ -48,18 +49,28 @@ function LevelNavigation({ navigation }) {
               onPress={() => navigation.navigate("Title")}
             ></Button>
             <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
-            <Button
-              title={"Level 1 B)"}
-              onPress={() => navigation.navigate("Level1", { nameParam: "Jane" })}
-            ></Button>
-            <Button
-              title={"Level 2 :P"}
-              onPress={() => navigation.navigate("Level2", { nameParam: "Jane" })}
-            ></Button>
-            <Button
-              title={"Level 3 >:)"}
-              onPress={() => navigation.navigate("Level3", { nameParam: "Jane" })}
-            ></Button>
+            
+            <TouchableOpacity
+            style = {styles.level1}
+            onPress={() => navigation.navigate("Level1")}>
+              <Image source = {require(boss)}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            style = {styles.level2}
+            onPress={() => navigation.navigate("Level2")}>
+              <Image source = {require(boss)}/>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+            style = {styles.level3}
+            onPress={() => navigation.navigate("Level3")}>
+              <Image source = {require(boss)}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {styles.boss}>
+              <Image source = {require(boss)}/>
+            </TouchableOpacity>
 
           </ImageBackground>
         </FadeView>
@@ -127,4 +138,24 @@ const styles = StyleSheet.create({
   settings: {
     alignItems: "flex-start",
   },
+  level1: {
+    position: 'absolute',
+    top: 60,
+    left: 100,
+  },
+  level2: {
+    position: 'absolute',
+    top: 250,
+    left: 200,
+  },
+  level3: {
+    position: 'absolute',
+    top: 470,
+    left: 100,
+  },
+  boss: {
+    position: 'absolute',
+    top: 750,
+    left: 190,
+  }
 });

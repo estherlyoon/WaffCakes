@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
+const generateProblem = (problem, a, b) => {
+  console.log("GENERATE PROBLEM: " + problem + " " + a + " " + b);
+  if (problem == "addition") 
+    return a + " + " + b + " = ?";
+  else if (problem == "multiplication")
+    return a + " x " + b + " = ?";
+  else if (problem == "division")
+    return a + " / " + b + " = ?";
+};
+
 class Question extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +19,7 @@ class Question extends Component {
   render() {
     return (
       <View style={styles.question}>
-        <Text>{this.props.problem}</Text>
+        <Text>{generateProblem(this.props.problem, this.props.a, this.props.b)}</Text>
       </View>
     );
   }

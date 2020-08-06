@@ -7,36 +7,63 @@ import Constants from "../../config/Constants.js";
 import Question from "./Question.js";
 import Answer from "./Answer.js";
 
-const generateAnswers = (a, b) => {
-  let answer = Array(3);
-  shuffle = require("shuffle-array");
-  answer[0] = a + b - 1;
-  answer[1] = a + b;
-  answer[2] = a + b + 1;
-  return shuffle(answer);
-};
-
 class Problem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.difficulty = this.props.difficulty;
+    this.type = this.props.type;
     a = this.generateRandomNumber();
     b = this.generateRandomNumber();
     onCorrect = props.onCorrect;
     onIncorrect = props.onIncorrect;
-    answer = generateAnswers(a, b);
+    answer = this.generateAnswers(a, b);
   }
 
-  generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
-  isCorrectAnswer = (index) => answer[index] === a + b;
+  generateAnswers = (a, b) => {
+    let answer = Array(3);
+    shuffle = require("shuffle-array");
+    if(this.type == 'addition'){
+      answer[0] = a + b - 1;
+      answer[1] = a + b;
+      answer[2] = a + b + 1;
+    }
+    else if(this.type == 'multiplication'){
+      answer[0] = a * b - 1;
+      answer[1] = a * b;
+      answer[2] = a * b + 1;
+    }
+    else if(this.type == 'division'){
+      answer[0] = a / b - 1;
+      answer[1] = a / b;
+      answer[2] = a / b + 1;
+    }
+    this.correctAnswer = answer[1];
+    return shuffle(answer);
+  };
+
+  generateRandomNumber = () => Math.floor(Math.random() * 12) + 1;
+  getAnswer = () => {
+    let ans;
+    if(this.type == 'addition')
+      ans = a + b;
+    else if(this.type == 'multiplication')
+      ans = a * b;
+    else if(this.type == 'division')
+      ans = a / b;
+    return ans;
+  }
+  isCorrectAnswer = (index) => answer[index] === this.correctAnswer;
+
 
   render() {
     return (
       <View style={styles.problemContainer}>
         <Question
           style={{ top: 300 }}
-          problem={a + " + " + b + "  = ?"}
+          problem={this.props.type} 
+          a={a}
+          b={b}
         ></Question>
         <Answer
           engine={this.props.engine}
