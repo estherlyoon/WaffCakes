@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import Constants from "../../config/Constants.js";
 
 var i = 0;
@@ -11,8 +11,6 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
   let fireball = entities.fireball;
   let characterHealth = entities.characterHealth;
   let lackeyHealth = entities.lackeyHealth;
-  let progressBar = entities.progressBar;
-
 
   //animation purposes
   if (i % 6 == 0) {
@@ -51,15 +49,11 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
       // handle lackey battle
       if (typeof lackey !== "undefined") {
         if (events[i] === "lackey-correct") {
-          if (lackeyHealth.health == 1)
-            dispatch("lackey-beaten");
-          else {
-            lackeyHealth.health -= 1; 
-            fireball.y = lackey.y + 10;
-            fireball.problemSeed += 1;
-          }
+          lackeyHealth.health -= 1;
+          fireball.y = lackey.y + 10;
+          fireball.problemSeed += 1;
         } else if (events[i] === "lackey-incorrect") {
-          // might not need, if so remove dispatch
+          // might not need
         }
       }
     }
@@ -111,11 +105,9 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
       }
     } // otherwise, move towards character
     else {
-      fireball.y += Constants.FIREBALL_SPEED;
+      fireball.y += 10;
     }
   }
-
-
 
   i++;
   return entities;
