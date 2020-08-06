@@ -28,7 +28,6 @@ import Images from "../../config/Images.js";
 import Constants from "../../config/Constants";
 import Fireball from "../../assets/components/Fireball";
 import GameOverModal from "../../assets/components/GameOverModal";
-import ProgressBar from "../../assets/components/ProgressBar";
 
 const onCorrect = (engine) => {
   engine.dispatch("correct-answer-touched");
@@ -38,12 +37,10 @@ const onIncorrect = (engine) => {
   engine.dispatch("incorrect-answer-touched");
 };
 
-var rooms = 0;
-
 export default function Level1({ navigation }) {
   // changes to false when game is over
   const [running, setRunning] = useState(true);
-  
+
   let engine = null;
   const setEngine = (ref) => {
     engine = ref;
@@ -54,8 +51,6 @@ export default function Level1({ navigation }) {
   const onEvent = (e) => {
     console.log(e);
     if (e === "correct") {
-      if (rooms == Constants.LEVEL_ROOMS)
-        navigation.navigate("Home");
       console.log("onEvent correct answer found");
       removeProblem();
       addEntities();
@@ -63,11 +58,6 @@ export default function Level1({ navigation }) {
       console.log("onEvent incorrect answer found");
       removeProblem();
       addWrongEntities();
-    } else if (e === "lackey-beaten") { 
-      // maybe || with "correct", although idk how state will work
-      // also: victory message, lackey explodes?
-      removeProblem();
-      addEntities();
     } else if (e === "gameover") {
       console.log("GAME OVER");
       setRunning(false);
@@ -108,15 +98,18 @@ export default function Level1({ navigation }) {
         frame: 0,
         renderer: <Character />,
       },
-      progressbar: {
-        rooms: rooms++,
-        renderer: <ProgressBar />
-      },
     });
   };
 
   let addWrongEntities = () => {
     engine.swap({
+      // problem: {
+      //   engine: engine,
+      //   difficulty: "medium",
+      //   onCorrect: () => onCorrect(engine),
+      //   onIncorrect: () => onIncorrect(engine),
+      //   renderer: <Problem />,
+      // },
       character: {
         x: Constants.WRONG_CHARACTER_X,
         y: Constants.WRONG_CHARACTER_Y,
@@ -205,9 +198,13 @@ const styles = StyleSheet.create({
   },
   gameContainer: {
     flex: 1,
+    // position: "absolute",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   backgroundImage: {
     position: "absolute",
+    // flex: 1,
     width: "100%",
     height: "100%",
     justifyContent: "center",

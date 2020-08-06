@@ -36,7 +36,6 @@ function UserInput(props) {
         onChangeText={(text) => setText(text)}
         defaultValue={text}
         keyboardType={"number-pad"}
-        autoFocus="true"
       />
       <Button
         title="Enter"
