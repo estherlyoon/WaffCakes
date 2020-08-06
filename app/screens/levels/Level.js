@@ -28,6 +28,7 @@ import Images from "../../config/Images.js";
 import Constants from "../../config/Constants";
 import Fireball from "../../assets/components/Fireball";
 import GameOverModal from "../../assets/components/GameOverModal";
+import ProgressBar from "../..assets/components/ProgressBar";
 
 const onCorrect = (engine) => {
   engine.dispatch("correct-answer-touched");
@@ -36,6 +37,8 @@ const onCorrect = (engine) => {
 const onIncorrect = (engine) => {
   engine.dispatch("incorrect-answer-touched");
 };
+
+var rooms = 0;
 
 export default function Level({ type, navigation }) {
   // changes to false when game is over
@@ -51,6 +54,8 @@ export default function Level({ type, navigation }) {
   const onEvent = (e) => {
     console.log(e);
     if (e === "correct") {
+      if (rooms == Constants.LEVEL_ROOMS)
+        navigation.navigate("Home");
       console.log("onEvent correct answer found");
       removeProblem();
       addEntities();
@@ -58,6 +63,9 @@ export default function Level({ type, navigation }) {
       console.log("onEvent incorrect answer found");
       removeProblem();
       addWrongEntities();
+    } else if (e === "lackey-beaten") {
+        removeProblem();
+        addEntities();
     } else if (e === "gameover") {
       console.log("GAME OVER");
       setRunning(false);
@@ -99,6 +107,10 @@ export default function Level({ type, navigation }) {
         frame: 0,
         renderer: <Character />,
       },
+      progressBar: {
+          rooms: rooms++,
+          renderer: <ProgressBar />
+      }
     });
   };
 

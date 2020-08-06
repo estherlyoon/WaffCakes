@@ -49,9 +49,14 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
       // handle lackey battle
       if (typeof lackey !== "undefined") {
         if (events[i] === "lackey-correct") {
-          lackeyHealth.health -= 1;
-          fireball.y = lackey.y + 10;
-          fireball.problemSeed += 1;
+          // lackey defeated
+          if (lackeyHealth.health == 1)
+            dispatch("lackey-beaten");
+          else {
+            lackeyHealth.health -= 1;
+            fireball.y = lackey.y + 10;
+            fireball.problemSeed += 1;
+          }
         } else if (events[i] === "lackey-incorrect") {
           // might not need
         }
@@ -105,7 +110,7 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
       }
     } // otherwise, move towards character
     else {
-      fireball.y += 10;
+      fireball.y += Constants.FIREBALL_SPEED;
     }
   }
 
