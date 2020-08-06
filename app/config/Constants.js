@@ -30,4 +30,7 @@ export default Constants = {
     Dimensions.get("window").width - 60,
     Dimensions.get("window").height / 4,
   ],
+  LEVEL_ROOMS: 3,
+  FIREBALL_SPEED: 1,
+  DISREGARD: 0,
 };
