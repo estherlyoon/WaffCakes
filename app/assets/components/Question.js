@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 const generateProblem = (problem, a, b) => {
-  console.log("GENERATE PROBLEM: " + problem + " " + a + " " + b);
   if (problem == "addition") 
     return a + " + " + b + " = ?";
   else if (problem == "multiplication")

@@ -21,6 +21,7 @@ import Problem from "../../assets/components/Problem.js";
 import SwipeToMove from "../../assets/components/SwipeToMove.js";
 import Lackey from "../../assets/components/Lackey.js";
 import Health from "../../assets/components/Health.js";
+import Boss from "../../assets/components/Boss.js";
 
 import { GameEngine } from "react-native-game-engine";
 import { add } from "react-native-reanimated";
@@ -28,7 +29,7 @@ import Images from "../../config/Images.js";
 import Constants from "../../config/Constants";
 import Fireball from "../../assets/components/Fireball";
 import GameOverModal from "../../assets/components/GameOverModal";
-import ProgressBar from "../..assets/components/ProgressBar";
+import ProgressBar from "../../assets/components/ProgressBar";
 
 const onCorrect = (engine) => {
   engine.dispatch("correct-answer-touched");
@@ -54,11 +55,10 @@ export default function Level({ type, navigation }) {
   const onEvent = (e) => {
     console.log(e);
     if (e === "correct") {
-      if (rooms == Constants.LEVEL_ROOMS)
-        navigation.navigate("Home");
       console.log("onEvent correct answer found");
       removeProblem();
       addEntities();
+      
     } else if (e === "incorrect") {
       console.log("onEvent incorrect answer found");
       removeProblem();
@@ -66,6 +66,12 @@ export default function Level({ type, navigation }) {
     } else if (e === "lackey-beaten") {
         removeProblem();
         addEntities();
+    } else if (e === "boss-battle") {
+        removeProblem();
+        console.log("go boss");
+        addBoss();
+    } else if (e === "boss-beaten") {
+      navigation.navigate("Home");
     } else if (e === "gameover") {
       console.log("GAME OVER");
       setRunning(false);
@@ -128,9 +134,57 @@ export default function Level({ type, navigation }) {
       lackey: {
         x: Constants.LACKEY_X,
         y: Constants.LACKEY_Y,
+        isBoss: false,
         animation: "idle",
         frame: 0,
         renderer: <Lackey />,
+      },
+      fireball: {
+        engine: engine,
+        x: Constants.LACKEY_X,
+        y: Constants.LACKEY_Y,
+        animation: "idle",
+        frame: 0,
+        problemSeed: 0,
+        problemType: "addition",
+        renderer: <Fireball />,
+      },
+      characterHealth: {
+        entity: "Your",
+        engine: engine,
+        x: 50,
+        y: 100,
+        health: 3,
+        renderer: <Health />,
+      },
+      lackeyHealth: {
+        entity: "Enemy",
+        x: 250,
+        y: 100,
+        health: 3,
+        renderer: <Health />,
+      },
+    });
+  };
+
+  let addBoss = () => {
+    engine.swap({
+      character: {
+        x: Constants.WRONG_CHARACTER_X,
+        y: Constants.WRONG_CHARACTER_Y,
+        xspeed: 0,
+        yspeed: 0,
+        animation: "idle",
+        frame: 0,
+        renderer: <Character />,
+      },
+      lackey: {
+        x: Constants.LACKEY_X,
+        y: Constants.LACKEY_Y,
+        isBoss: true,
+        animation: "idle",
+        frame: 0,
+        renderer: <Boss />,
       },
       fireball: {
         engine: engine,

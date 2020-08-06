@@ -11,6 +11,7 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
   let fireball = entities.fireball;
   let characterHealth = entities.characterHealth;
   let lackeyHealth = entities.lackeyHealth;
+  let progressBar = entities.progressBar;
 
   //animation purposes
   if (i % 6 == 0) {
@@ -50,16 +51,18 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
       if (typeof lackey !== "undefined") {
         if (events[i] === "lackey-correct") {
           // lackey defeated
-          if (lackeyHealth.health == 1)
-            dispatch("lackey-beaten");
+          if (lackeyHealth.health == 1) {
+            if (lackey.isBoss)
+              dispatch("boss-beaten");
+            else
+              dispatch("lackey-beaten");
+          }
           else {
             lackeyHealth.health -= 1;
             fireball.y = lackey.y + 10;
             fireball.problemSeed += 1;
           }
-        } else if (events[i] === "lackey-incorrect") {
-          // might not need
-        }
+        } 
       }
     }
   }
@@ -113,6 +116,12 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
       fireball.y += Constants.FIREBALL_SPEED;
     }
   }
+
+  // going to boss battle
+  if (typeof progressBar !== 'undefined' && progressBar.rooms == Constants.LEVEL_ROOMS) {
+    dispatch("boss-battle");
+  }
+
 
   i++;
   return entities;
