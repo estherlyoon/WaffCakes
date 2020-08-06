@@ -24,4 +24,4 @@ class ProgressBar extends Component{
 
 }
 
-export default ProgressBar;
+export default ProgressBar; 
