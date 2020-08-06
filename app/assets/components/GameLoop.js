@@ -51,10 +51,11 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
       // handle lackey battle
       if (typeof lackey !== "undefined") {
         if (events[i] === "lackey-correct") {
+          // lackey defeated
           if (lackeyHealth.health == 1)
             dispatch("lackey-beaten");
           else {
-            lackeyHealth.health -= 1; 
+            lackeyHealth.health -= 1;
             fireball.y = lackey.y + 10;
             fireball.problemSeed += 1;
           }
