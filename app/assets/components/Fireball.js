@@ -13,16 +13,29 @@ const animate = [
   { image: require("../images/fireball/FB005.png") },
 ];
 
+
 class Fireball extends Component {
   constructor(props) {
     super(props);
     this.state = {
       a: this.generateRandomNumber(),
       b: this.generateRandomNumber(),
-      answer: a + b, //change later
+      type: this.props.type,
+      answer: this.getAnswer(),
       prob: this.generateProblem(),
     };
   }
+
+  getAnswer = () => {
+    let ans;
+    if(this.type == 'addition')
+      ans = a + b;
+    else if(this.type == 'multiplication')
+      ans = a * b;
+    else if(this.type == 'division')
+      ans = a / b;
+    return ans;
+  };
 
   fireballStyle = () => {
     return {
@@ -44,11 +57,15 @@ class Fireball extends Component {
     }
   };
 
-  generateRandomNumber = () => Math.floor(Math.random() * 100) + 1;
+  generateRandomNumber = () => Math.floor(Math.random() * 12) + 1;
 
   generateProblem = () => {
     if (this.props.problemType == "addition")
       return "" + a + " + " + b + " = ?";
+    else if (this.props.problemType == "multiplication")
+      return "" + a + " x " + b + " = ?";
+    if (this.props.problemType == "division")
+      return "" + a + " / " + b + " = ?";
   };
 
   // changes problem when newProblem boolean is set to true in GameLoop

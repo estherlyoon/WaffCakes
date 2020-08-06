@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, Text, View, SafeAreaView, Button } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import { TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import { useState } from "react";
@@ -14,8 +14,8 @@ export default function SettingsModal({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
-      <TouchableOpacity onPress={toggleModal}>
+    <View>
+      <TouchableOpacity onPress={toggleModal } style={{width:50}}>
         <Icon name="settings" style={styles.settings} size={50} />
       </TouchableOpacity>
 
@@ -31,7 +31,7 @@ export default function SettingsModal({ navigation }) {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 }
 
