@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-firebase/app": "^8.3.0",
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.5.1",
     "expo": "^38.0.9",
@@ -27,7 +28,10 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.9",
     "rn-sprite-sheet": "^1.1.9",
-    "shuffle-array": "^1.0.1"
+    "shuffle-array": "^1.0.1",
+    "firebase": "7.9.0",
+    "expo-google-sign-in": "~8.2.1",
+    "expo-facebook": "~8.2.1"
   },
   "devDependencies": {
     "babel-preset-expo": "^8.2.3",

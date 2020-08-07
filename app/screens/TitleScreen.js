@@ -5,17 +5,18 @@ import { View,
         ImageBackground, 
         Dimensions, 
         TouchableOpacity, 
-        Image,
-        Animated
+        TextInput,
+        Button,
     } from 'react-native'
 
 import FadeView from '../assets/components/FadeView';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const screen = '../assets/images/titlescreen.png';
 const button = '../assets/images/button.png';
 
 
-const TitleScreen = ({navigation}) => {
+const TitleScreen = ({navigation, onLoginPress}) => {
     return (
 
         <View style = {styles.container}>
@@ -23,7 +24,18 @@ const TitleScreen = ({navigation}) => {
 
                 <ImageBackground style = {styles.background} source = {require(screen)}>
                     <View style={styles.innerContainer}>
-
+                        <View>   
+                            <Text style={{fontSize: 27}}>
+                                Login
+                            </Text>
+                            <TextInput placeholder='Username' />
+                            <TextInput placeholder='Password' />
+                            <View style={{margin:7}} />
+                            <Button 
+                                onPress={() => navigation.navigate({name:"Home"})}
+                                title="Submit"
+                            />    
+                        </View>
                         <View>
                             <Text style={{fontSize:100, color:'white'}}>TITLE</Text>
                         </View>

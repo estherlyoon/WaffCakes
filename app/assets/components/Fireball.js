@@ -20,7 +20,7 @@ class Fireball extends Component {
     this.state = {
       a: this.generateRandomNumber(),
       b: this.generateRandomNumber(),
-      type: this.props.type,
+      type: this.props.problemType,
       answer: this.getAnswer(),
       prob: this.generateProblem(),
     };
@@ -28,12 +28,14 @@ class Fireball extends Component {
 
   getAnswer = () => {
     let ans;
-    if(this.type == 'addition')
-      ans = a + b;
+    if(this.props.problemType == 'addition')
+      ans = this.state.a + this.state.b;
     else if(this.type == 'multiplication')
       ans = a * b;
     else if(this.type == 'division')
       ans = a / b;
+    console.log("ans: " + ans);
+    console.log("type: " + this.props.problemType);
     return ans;
   };
 
@@ -73,7 +75,6 @@ class Fireball extends Component {
     if (this.props.problemSeed != prevProps.problemSeed) {
       //this.changeProblem();
       console.log("changing problem");
-
       this.setState({
         a: this.generateRandomNumber(),
         b: this.generateRandomNumber(),

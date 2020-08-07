@@ -12,7 +12,7 @@ const AnswerInput = ({ engine, answer }) => {
       setInput("");
     } else {
       engine.dispatch("lackey-incorrect");
-      console.log(text.nativeEvent.text) + " " + answer;
+      console.log(text.nativeEvent.text + " answer: " + answer);
     }
   };
 

@@ -37,13 +37,24 @@ const openSettings = () => {
 const levelmap = '../assets/images/levelmap.png';
 const boss = '../assets/images/boss/bossicon.png';
 
-function LevelNavigation({ navigation }) {
+
+function LevelNavigation({ navigation, onLogoutPress }) {
   return (
     <View style={styles.container}>
         <FadeView initial = {0} final = {1}>
           <ImageBackground style = {styles.background} source = {require(levelmap)}>
+
+
           <View style = {styles.header}/>
-          
+            <Text style={{fontSize: 27}}>
+                Welcome
+            </Text>
+            <View style={{margin:20}} />
+              <Button 
+                onPress={() => navigation.navigate("Title")}
+                title="Logout"/>
+
+
             <Button
               title={"Back"}
               onPress={() => navigation.navigate("Title")}
@@ -92,10 +103,12 @@ function Home() {
       <Stack.Screen
           name="Title"
           component={TitleScreen}
+        //  initialParams={{ onLoginPress:() => navigation.navigate("Home")}}
         />
         <Stack.Screen
           name="Home"
           component={LevelNavigation}
+        //  initialParams={{ onLogoutPress:() => navigation.navigate("Title")}}
           options={{ title: "Main Menu", gestureEnabled: false }}
         />
         <Stack.Screen name="Level1" component={Level1} options={{gestureEnabled: false }}/>
