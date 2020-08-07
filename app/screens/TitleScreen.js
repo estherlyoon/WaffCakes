@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, 
         StyleSheet, 
         Text, 
@@ -18,55 +18,106 @@ import * as GoogleSignIn from 'expo-google-sign-in';
 const screen = '../assets/images/titlescreen.png';
 const button = '../assets/images/button.png';
 
-const onLoginSuccess = () => {
-    this.props.navigation.navigate('Home');
-  }
 
-const signInWithGoogle = async () => {
-    try {
-        await GoogleSignIn.askForPlayServicesAsync();
-        const {type, user} = await GoogleSignIn.signInAsync();
-        const data = await GoogleSignIn.GoogleAuthentication.prototype.toJSON();
-        if (type === 'success') {
-          await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-          const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
-          const googleProfileData = await firebase.auth().signInWithCredential(credential);
-          onLoginSuccess.bind(this);
-        }
-      } catch ({ message }) {
-        alert('login: Error:' + message);
-      }
-}
+
+
+
 
 const TitleScreen = ({navigation, onLoginPress}) => {
 
-   
+   const [email, setEmail] = useState("");
+   const [password, setPassword] = useState("");
+   const [error, setError] = useState("");
+   const [loading, setLoading] = useState(false);
+
+   const signInWithEmail = async () => {
+    await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(onLoginSuccess.bind(this))
+      .catch(error => {
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          if (errorCode == 'auth/weak-password') {
+              onLoginFailure.bind(this)('Weak Password!');
+          } else {
+              onLoginFailure.bind(this)(errorMessage);
+          }
+      });
+  }
+
+  const onLoginSuccess = () => {
+    navigation.navigate('Home');
+  }
+
+  const onLoginFailure = (errorMessage) => {
+    setError(errorMessage);
+    setLoading(false);
+    console.log("failed to login");
+  }
+
+//   const renderLoading = () => {
+//     if (loading) {
+//       return (
+//         <View>
+//           <ActivityIndicator size={'large'} />
+//         </View>
+//       );
+//     }
+//   }
 
     return (
 
         <View>
-            <FadeView initial = {0} final = {1}>
 
-            <TouchableOpacity 
-              style={{ width: "86%", marginTop: 10 }}
-              onPress={signInWithGoogle}>
-              <View >
-                <Text
-                  style={{
-                    letterSpacing: 0.5,
-                    fontSize: 16,
-                    color: "#707070"
-                  }}
-                >
-                  Continue with Google
-                </Text>
-              </View>
+            <View >
+              <TextInput
+                // style={styles.input}
+                placeholder="Email"
+                placeholderTextColor="#B1B1B1"
+                returnKeyType="next"
+                keyboardType="email-address"
+                textContentType="emailAddress"
+                value={email}
+                onChangeText={email => setEmail(email)}
+              />
+              <TextInput
+                // style={styles.input}
+                placeholder="Password"
+                placeholderTextColor="#B1B1B1"
+                returnKeyType="done"
+                textContentType="newPassword"
+                secureTextEntry={true}
+                value={password}
+                onChangeText={password => setPassword(password)}
+              />
+            </View>
+            {/* {renderLoading} */}
+            <Text
+              style={{
+                fontSize: 18,
+                textAlign: "center",
+                color: "red",
+                width: "80%"
+              }}
+            >
+              {error}
+            </Text>
+            <TouchableOpacity
+              style={{ width: '86%', marginTop: 10 }}
+              onPress={signInWithEmail}>
+                  <Text>Sign In</Text>
             </TouchableOpacity>
+            <FadeView initial = {0} final = {1}>
 
 
                 <ImageBackground style = {styles.background} source = {require(screen)}>
                     <View style={styles.innerContainer}>
-                        <View>   
+
+                        
+
+
+                        {/* <View>   
                             <Text style={{fontSize: 27}}>
                                 Login
                             </Text>
@@ -77,7 +128,7 @@ const TitleScreen = ({navigation, onLoginPress}) => {
                                 onPress={() => navigation.navigate({name:"Home"})}
                                 title="Submit"
                             />    
-                        </View>
+                        </View> */}
                         <View>
                             <Text style={{fontSize:100, color:'white'}}>TITLE</Text>
                         </View>
@@ -118,6 +169,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-around',
         alignItems: 'center',
+
     },
     button: {
         marginVertical: 10,

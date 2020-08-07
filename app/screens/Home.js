@@ -21,11 +21,7 @@ import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
 
-import * as firebase from 'firebase';
-import { firebaseConfig } from "../../android/app/google-services.json"
 
-
-firebase.initializeApp(firebaseConfig);
 
 const Stack = createStackNavigator();
 // const handlePress = () => console.log("Image Pressed");
