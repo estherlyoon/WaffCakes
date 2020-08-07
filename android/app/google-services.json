@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "718100773347",
+    "firebase_url": "https://waffcakes-df9fd.firebaseio.com",
+    "project_id": "waffcakes-df9fd",
+    "storage_bucket": "waffcakes-df9fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718100773347:android:8122d7ef5fee8a54cc88d6",
+        "android_client_info": {
+          "package_name": "com.waffcakes.alggame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718100773347-fgqf3vjjdiu1ebdm8iv7l1op0tkes1l6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZtS3qg9-ybyIYTIuKsKAaCeSUXoCLWmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "718100773347-fgqf3vjjdiu1ebdm8iv7l1op0tkes1l6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

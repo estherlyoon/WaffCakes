@@ -13,21 +13,19 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
-import { useState } from "react";
 import { TouchableHighlight, ScrollView } from "react-native-gesture-handler";
 
-import Settings from "./Settings";
-import SettingsPopup from "./SettingsPopup";
-import SettingsModal from "./SettingsModal";
 import Level1 from "./levels/Level1.js";
 import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
 
-//Ask Ashwin about importing all files from folder
-// import Level1 from "./levels/Level1";
-// import {Level1, Level2, Level3}
+import * as firebase from 'firebase';
+import { firebaseConfig } from "../../android/app/google-services.json"
+
+
+firebase.initializeApp(firebaseConfig);
 
 const Stack = createStackNavigator();
 // const handlePress = () => console.log("Image Pressed");
