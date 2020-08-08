@@ -8,7 +8,7 @@ import {
   Button,
   Image,
   ImageBackground,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -24,6 +24,7 @@ import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
+import TutorialModal from "./tutorialModal";
 
 //Ask Ashwin about importing all files from folder
 // import Level1 from "./levels/Level1";
@@ -34,71 +35,71 @@ const Stack = createStackNavigator();
 const openSettings = () => {
   console.log("Open Settings");
 };
-const levelmap = '../assets/images/levelmap.png';
-const boss = '../assets/images/boss/bossicon.png';
+const levelmap = "../assets/images/levelmap.png";
+const boss = "../assets/images/boss/bossicon.png";
 
 function LevelNavigation({ navigation }) {
   return (
     <View style={styles.container}>
-        <FadeView initial = {0} final = {1}>
-          <ImageBackground style = {styles.background} source = {require(levelmap)}>
-          <View style = {styles.header}/>
-          
-            <Button
-              title={"Back"}
-              onPress={() => navigation.navigate("Title")}
-            ></Button>
-            <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
-            
-            <TouchableOpacity
-            style = {styles.level1}
-            onPress={() => navigation.navigate("Level1")}>
-              <Image source = {require(boss)}/>
-            </TouchableOpacity>
+      <FadeView initial={0} final={1}>
+        <ImageBackground style={styles.background} source={require(levelmap)}>
+          <View style={styles.header} />
+          <TutorialModal />
+          <Button
+            title={"Back"}
+            onPress={() => navigation.navigate("Title")}
+          ></Button>
+          <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
 
-            <TouchableOpacity
-            style = {styles.level2}
-            onPress={() => navigation.navigate("Level2")}>
-              <Image source = {require(boss)}/>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-            style = {styles.level3}
-            onPress={() => navigation.navigate("Level3")}>
-              <Image source = {require(boss)}/>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.level1}
+            onPress={() => navigation.navigate("Level1")}
+          >
+            <Image source={require(boss)} />
+          </TouchableOpacity>
 
-            <TouchableOpacity style = {styles.boss}>
-              <Image source = {require(boss)}/>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.level2}
+            onPress={() => navigation.navigate("Level2")}
+          >
+            <Image source={require(boss)} />
+          </TouchableOpacity>
 
-          </ImageBackground>
-        </FadeView>
+          <TouchableOpacity
+            style={styles.level3}
+            onPress={() => navigation.navigate("Level3")}
+          >
+            <Image source={require(boss)} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.boss}>
+            <Image source={require(boss)} />
+          </TouchableOpacity>
+        </ImageBackground>
+      </FadeView>
     </View>
   );
 }
 
 export default function App() {
-
-  return (
-    <Home/>
-  );
+  return <Home />;
 }
 
 function Home() {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
-      <Stack.Screen
-          name="Title"
-          component={TitleScreen}
-        />
+        <Stack.Screen name="Title" component={TitleScreen} />
         <Stack.Screen
           name="Home"
           component={LevelNavigation}
           options={{ title: "Main Menu", gestureEnabled: false }}
         />
-        <Stack.Screen name="Level1" component={Level1} options={{gestureEnabled: false }}/>
+        <Stack.Screen
+          name="Level1"
+          component={Level1}
+          options={{ gestureEnabled: false }}
+        />
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
         {/* <Stack.Screen name="Level1" component={Level1} /> */}
@@ -112,11 +113,11 @@ const styles = StyleSheet.create({
     height: 50,
   },
   background: {
-    width: Dimensions.get('window').width,
+    width: Dimensions.get("window").width,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-},
+    justifyContent: "center",
+    alignItems: "center",
+  },
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
@@ -133,29 +134,29 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
   settings: {
     alignItems: "flex-start",
   },
   level1: {
-    position: 'absolute',
+    position: "absolute",
     top: 60,
     left: 100,
   },
   level2: {
-    position: 'absolute',
+    position: "absolute",
     top: 250,
     left: 200,
   },
   level3: {
-    position: 'absolute',
+    position: "absolute",
     top: 470,
     left: 100,
   },
   boss: {
-    position: 'absolute',
+    position: "absolute",
     top: 750,
     left: 190,
-  }
+  },
 });
