@@ -9,7 +9,7 @@ import {
   Button,
   Image,
   ImageBackground,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -21,8 +21,11 @@ import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
+
 import firebase from 'firebase';
 import SignUp from "./SignUp";
+import TutorialModal from "./tutorialModal";
+
 
 
 const Stack = createStackNavigator();
@@ -30,8 +33,8 @@ const Stack = createStackNavigator();
 const openSettings = () => {
   console.log("Open Settings");
 };
-const levelmap = '../assets/images/levelmap.png';
-const boss = '../assets/images/boss/bossicon.png';
+const levelmap = "../assets/images/levelmap.png";
+const boss = "../assets/images/boss/bossicon.png";
 
 
 function LevelNavigation({ navigation }) {
@@ -48,6 +51,7 @@ function LevelNavigation({ navigation }) {
 
   return (
     <View style={styles.container}>
+
         <FadeView initial = {0} final = {1}>
           <ImageBackground style = {styles.background} source = {require(levelmap)}>
 
@@ -58,6 +62,7 @@ function LevelNavigation({ navigation }) {
           </SafeAreaView>
 
           <View style = {styles.header}/>
+             <TutorialModal />
             <Text style={{fontSize: 27}}>
                 Welcome
             </Text>
@@ -77,33 +82,38 @@ function LevelNavigation({ navigation }) {
               <Image source = {require(boss)}/>
             </TouchableOpacity>
 
-            <TouchableOpacity
-            style = {styles.level2}
-            onPress={() => navigation.navigate("Level2")}>
-              <Image source = {require(boss)}/>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-            style = {styles.level3}
-            onPress={() => navigation.navigate("Level3")}>
-              <Image source = {require(boss)}/>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.level1}
+            onPress={() => navigation.navigate("Level1")}
+          >
+            <Image source={require(boss)} />
+          </TouchableOpacity>
 
-            <TouchableOpacity style = {styles.boss}>
-              <Image source = {require(boss)}/>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.level2}
+            onPress={() => navigation.navigate("Level2")}
+          >
+            <Image source={require(boss)} />
+          </TouchableOpacity>
 
-          </ImageBackground>
-        </FadeView>
+          <TouchableOpacity
+            style={styles.level3}
+            onPress={() => navigation.navigate("Level3")}
+          >
+            <Image source={require(boss)} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.boss}>
+            <Image source={require(boss)} />
+          </TouchableOpacity>
+        </ImageBackground>
+      </FadeView>
     </View>
   );
 }
 
 export default function App() {
-
-  return (
-    <Home/>
-  );
+  return <Home />;
 }
 
 function Home() {
@@ -117,14 +127,17 @@ function Home() {
          <Stack.Screen
           name="SignUp"
           component={SignUp}
-          // options={{ title: "Main Menu", gestureEnabled: false }}
         />
         <Stack.Screen
           name="Home"
           component={LevelNavigation}
           options={{ title: "Main Menu", gestureEnabled: false }}
         />
-        <Stack.Screen name="Level1" component={Level1} options={{gestureEnabled: false }}/>
+        <Stack.Screen
+          name="Level1"
+          component={Level1}
+          options={{ gestureEnabled: false }}
+        />
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
       </Stack.Navigator>
@@ -137,11 +150,11 @@ const styles = StyleSheet.create({
     height: 50,
   },
   background: {
-    width: Dimensions.get('window').width,
+    width: Dimensions.get("window").width,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-},
+    justifyContent: "center",
+    alignItems: "center",
+  },
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
@@ -163,23 +176,23 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   level1: {
-    position: 'absolute',
+    position: "absolute",
     top: 60,
     left: 100,
   },
   level2: {
-    position: 'absolute',
+    position: "absolute",
     top: 250,
     left: 200,
   },
   level3: {
-    position: 'absolute',
+    position: "absolute",
     top: 470,
     left: 100,
   },
   boss: {
-    position: 'absolute',
+    position: "absolute",
     top: 750,
     left: 190,
-  }
+  },
 });

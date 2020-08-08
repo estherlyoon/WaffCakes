@@ -18,24 +18,23 @@ class Fireball extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      a: this.generateRandomNumber(),
-      b: this.generateRandomNumber(),
-      type: this.props.problemType,
-      answer: this.getAnswer(),
-      prob: this.generateProblem(),
     };
+    this.a = this.generateRandomNumber();
+    this.b = this.generateRandomNumber();
+    this.answer = this.getAnswer();
+    this.prob = this.generateProblem();
   }
 
   getAnswer = () => {
     let ans;
     if(this.props.problemType == 'addition')
-      ans = this.state.a + this.state.b;
-    else if(this.type == 'multiplication')
-      ans = a * b;
-    else if(this.type == 'division')
-      ans = a / b;
-    console.log("ans: " + ans);
-    console.log("type: " + this.props.problemType);
+
+      ans = this.a + this.b;
+    else if(this.props.problemType == 'multiplication')
+      ans = this.a * this.b;
+    else if(this.props.problemType == 'division')
+      ans = this.a / this.b;
+
     return ans;
   };
 
@@ -63,11 +62,11 @@ class Fireball extends Component {
 
   generateProblem = () => {
     if (this.props.problemType == "addition")
-      return "" + a + " + " + b + " = ?";
+      return "" + this.a + " + " + this.b + " = ?";
     else if (this.props.problemType == "multiplication")
-      return "" + a + " x " + b + " = ?";
+      return "" + this.a + " x " + this.b + " = ?";
     if (this.props.problemType == "division")
-      return "" + a + " / " + b + " = ?";
+      return "" + this.a + " / " + this.b + " = ?";
   };
 
   // changes problem when newProblem boolean is set to true in GameLoop
@@ -75,12 +74,10 @@ class Fireball extends Component {
     if (this.props.problemSeed != prevProps.problemSeed) {
       //this.changeProblem();
       console.log("changing problem");
-      this.setState({
-        a: this.generateRandomNumber(),
-        b: this.generateRandomNumber(),
-        answer: this.state.a + this.state.b,
-        prob: this.state.a + " + " + this.state.b + " = ?",
-      });
+      this.a = this.generateRandomNumber();
+      this.b = this.generateRandomNumber();
+      this.answer = this.getAnswer();
+      this.prob = this.generateProblem();
       //this.props.newProblem = false;
     }
   }
@@ -105,11 +102,11 @@ class Fireball extends Component {
               alignSelf: "center",
             }}
           >
-            {this.state.prob}
+            {this.prob}
           </Text>
         </View>
         <View style={{ position: "absolute", top: 700, left: 100 }}>
-          <AnswerInput engine={this.props.engine} answer={this.state.answer} />
+          <AnswerInput engine={this.props.engine} answer={this.answer} />
         </View>
       </View>
     );

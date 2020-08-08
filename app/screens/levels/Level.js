@@ -146,7 +146,7 @@ export default function Level({ type, navigation }) {
         animation: "idle",
         frame: 0,
         problemSeed: 0,
-        problemType: "addition",
+        problemType: type,
         renderer: <Fireball />,
       },
       characterHealth: {
