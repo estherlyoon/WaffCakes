@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.waffcakes.alggame",
-      "googleServicesFile": "./android/google-services.json"
+      "googleServicesFile": "./android/app/google-services.json"
     },
     "entryPoint": "node_modules/expo/AppEntry.js"
   }

@@ -1,5 +1,6 @@
 import "react-native-gesture-handler";
 import * as React from "react";
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,7 +21,8 @@ import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
-
+import firebase from 'firebase';
+import SignUp from "./SignUp";
 
 
 const Stack = createStackNavigator();
@@ -32,12 +34,28 @@ const levelmap = '../assets/images/levelmap.png';
 const boss = '../assets/images/boss/bossicon.png';
 
 
-function LevelNavigation({ navigation, onLogoutPress }) {
+function LevelNavigation({ navigation }) {
+
+  const [user, setUser] = useState({});
+
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user != null) {
+        setUser(user);
+      }
+    })
+  }, [user])
+
   return (
     <View style={styles.container}>
         <FadeView initial = {0} final = {1}>
           <ImageBackground style = {styles.background} source = {require(levelmap)}>
 
+          <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
+              <Text>{user.email}</Text>
+            </View>
+          </SafeAreaView>
 
           <View style = {styles.header}/>
             <Text style={{fontSize: 27}}>
@@ -45,10 +63,8 @@ function LevelNavigation({ navigation, onLogoutPress }) {
             </Text>
             <View style={{margin:20}} />
               <Button 
-                onPress={() => navigation.navigate("Title")}
+                onPress={() =>  { firebase.auth().signOut(); navigation.navigate("Title"); }} //logout
                 title="Logout"/>
-
-
             <Button
               title={"Back"}
               onPress={() => navigation.navigate("Title")}
@@ -97,18 +113,20 @@ function Home() {
       <Stack.Screen
           name="Title"
           component={TitleScreen}
-        //  initialParams={{ onLoginPress:() => navigation.navigate("Home")}}
+        />
+         <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          // options={{ title: "Main Menu", gestureEnabled: false }}
         />
         <Stack.Screen
           name="Home"
           component={LevelNavigation}
-        //  initialParams={{ onLogoutPress:() => navigation.navigate("Title")}}
           options={{ title: "Main Menu", gestureEnabled: false }}
         />
         <Stack.Screen name="Level1" component={Level1} options={{gestureEnabled: false }}/>
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
-        {/* <Stack.Screen name="Level1" component={Level1} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -140,7 +158,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: 'black',
   },
   settings: {
     alignItems: "flex-start",

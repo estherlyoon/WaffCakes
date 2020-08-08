@@ -14,16 +14,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 import firebase from 'firebase';
 import "firebase/firestore";
 import * as GoogleSignIn from 'expo-google-sign-in';
+import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 
 const screen = '../assets/images/titlescreen.png';
 const button = '../assets/images/button.png';
 
 
-
-
-
-
-const TitleScreen = ({navigation, onLoginPress}) => {
+const TitleScreen = ({navigation}) => {
 
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
@@ -68,7 +65,7 @@ const TitleScreen = ({navigation, onLoginPress}) => {
 
     return (
 
-        <View>
+        <View style= {styles.container}>
 
             <View >
               <TextInput
@@ -108,27 +105,11 @@ const TitleScreen = ({navigation, onLoginPress}) => {
               onPress={signInWithEmail}>
                   <Text>Sign In</Text>
             </TouchableOpacity>
-            <FadeView initial = {0} final = {1}>
 
 
+            <FadeView initial = {0} final = {1}> 
                 <ImageBackground style = {styles.background} source = {require(screen)}>
                     <View style={styles.innerContainer}>
-
-                        
-
-
-                        {/* <View>   
-                            <Text style={{fontSize: 27}}>
-                                Login
-                            </Text>
-                            <TextInput placeholder='Username' />
-                            <TextInput placeholder='Password' />
-                            <View style={{margin:7}} />
-                            <Button 
-                                onPress={() => navigation.navigate({name:"Home"})}
-                                title="Submit"
-                            />    
-                        </View> */}
                         <View>
                             <Text style={{fontSize:100, color:'white'}}>TITLE</Text>
                         </View>
@@ -142,6 +123,12 @@ const TitleScreen = ({navigation, onLoginPress}) => {
                             <TouchableOpacity onPress={()=> navigation.navigate({ name: 'Home'})}>
                                 <ImageBackground style={styles.button} source = {require(button)}>
                                     <Text style={styles.buttonText}>CREDITS</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={()=> navigation.navigate({ name: 'SignUp'})}>
+                                <ImageBackground style={styles.button} source = {require(button)}>
+                                    <Text style={styles.buttonText}>SIGN UP</Text>
                                 </ImageBackground>
                             </TouchableOpacity>
                         </View>
@@ -163,12 +150,12 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: 'black',
     },
     innerContainer: {
         flex: 1,
         justifyContent: 'space-around',
         alignItems: 'center',
+        position: 'absolute'
 
     },
     button: {
