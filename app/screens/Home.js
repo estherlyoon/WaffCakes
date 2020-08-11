@@ -1,5 +1,6 @@
 import "react-native-gesture-handler";
 import * as React from "react";
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,22 +14,19 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
-import { useState } from "react";
 import { TouchableHighlight, ScrollView } from "react-native-gesture-handler";
 
-import Settings from "./Settings";
-import SettingsPopup from "./SettingsPopup";
-import SettingsModal from "./SettingsModal";
 import Level1 from "./levels/Level1.js";
 import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
+
+import firebase from 'firebase';
+import SignUp from "./SignUp";
 import TutorialModal from "./tutorialModal";
 
-//Ask Ashwin about importing all files from folder
-// import Level1 from "./levels/Level1";
-// import {Level1, Level2, Level3}
+
 
 const Stack = createStackNavigator();
 // const handlePress = () => console.log("Image Pressed");
@@ -38,18 +36,51 @@ const openSettings = () => {
 const levelmap = "../assets/images/levelmap.png";
 const boss = "../assets/images/boss/bossicon.png";
 
+
 function LevelNavigation({ navigation }) {
+
+  const [user, setUser] = useState({});
+
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user != null) {
+        setUser(user);
+      }
+    })
+  }, [user])
+
   return (
     <View style={styles.container}>
-      <FadeView initial={0} final={1}>
-        <ImageBackground style={styles.background} source={require(levelmap)}>
-          <View style={styles.header} />
-          <TutorialModal />
-          <Button
-            title={"Back"}
-            onPress={() => navigation.navigate("Title")}
-          ></Button>
-          <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
+
+        <FadeView initial = {0} final = {1}>
+          <ImageBackground style = {styles.background} source = {require(levelmap)}>
+
+          <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
+              <Text>{user.email}</Text>
+            </View>
+          </SafeAreaView>
+
+          <View style = {styles.header}/>
+             <TutorialModal />
+            <Text style={{fontSize: 27}}>
+                Welcome
+            </Text>
+            <View style={{margin:20}} />
+              <Button 
+                onPress={() =>  { firebase.auth().signOut(); navigation.navigate("Title"); }} //logout
+                title="Logout"/>
+            <Button
+              title={"Back"}
+              onPress={() => navigation.navigate("Title")}
+            ></Button>
+            <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
+            
+            <TouchableOpacity
+            style = {styles.level1}
+            onPress={() => navigation.navigate("Level1")}>
+              <Image source = {require(boss)}/>
+            </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.level1}
@@ -89,7 +120,14 @@ function Home() {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
-        <Stack.Screen name="Title" component={TitleScreen} />
+      <Stack.Screen
+          name="Title"
+          component={TitleScreen}
+        />
+         <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+        />
         <Stack.Screen
           name="Home"
           component={LevelNavigation}
@@ -102,7 +140,6 @@ function Home() {
         />
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
-        {/* <Stack.Screen name="Level1" component={Level1} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -134,7 +171,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
   },
   settings: {
     alignItems: "flex-start",

@@ -18,7 +18,6 @@ class Fireball extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
     };
     this.a = this.generateRandomNumber();
     this.b = this.generateRandomNumber();
@@ -29,11 +28,13 @@ class Fireball extends Component {
   getAnswer = () => {
     let ans;
     if(this.props.problemType == 'addition')
+
       ans = this.a + this.b;
     else if(this.props.problemType == 'multiplication')
       ans = this.a * this.b;
     else if(this.props.problemType == 'division')
       ans = this.a / this.b;
+
     return ans;
   };
 

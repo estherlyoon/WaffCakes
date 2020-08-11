@@ -2,7 +2,11 @@
   "expo": {
     "name": "App2",
     "slug": "App2",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/images/icon.png",
@@ -14,9 +18,17 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.waffcakes.alggame"
+    },
+    "android": {
+      "package": "com.waffcakes.alggame",
+      "googleServicesFile": "./android/app/google-services.json"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
