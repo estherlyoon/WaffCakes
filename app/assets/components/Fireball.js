@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, KeyboardAvoidingView, Platform } from "react-native";
 import AnswerInput from "./AnswerInput";
 
 import Sprite from "./Sprite.js";
@@ -86,7 +86,7 @@ class Fireball extends Component {
     //console.log("problemSeed: " + this.props.problemSeed);
     //console.log("prob: " + this.state.prob);
     return (
-      <View>
+      <View style={{flex:1}}>
         <View style={this.fireballStyle()}>
           <Image
             style={{
@@ -105,9 +105,11 @@ class Fireball extends Component {
             {this.prob}
           </Text>
         </View>
-        <View style={{ position: "absolute", top: 700, left: 100 }}>
-          <AnswerInput engine={this.props.engine} answer={this.answer} />
-        </View>
+        <KeyboardAvoidingView
+          style = {{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}>
+            <AnswerInput engine={this.props.engine} answer={this.answer} />
+        </KeyboardAvoidingView>
       </View>
     );
   }
