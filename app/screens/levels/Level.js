@@ -64,18 +64,21 @@ export default function Level({ type, navigation }) {
       removeProblem();
       addWrongEntities();
     } else if (e === "lackey-beaten") {
-        removeProblem();
-        addEntities();
+        //removeProblem();
+        addWinEntities(false); //isBoss is false
     } else if (e === "boss-battle") {
         removeProblem();
         console.log("go boss");
         addBoss();
     } else if (e === "boss-beaten") {
-      navigation.navigate("Home");
+      addWinEntities(true); //isBoss is true
+      //navigation.navigate("Home");
     } else if (e === "gameover") {
       console.log("GAME OVER");
       setRunning(false);
       //navigation.navigate("Home")
+    } else if(e === "go-home"){
+        navigation.navigate("Home")
     }
   };
 
@@ -118,6 +121,64 @@ export default function Level({ type, navigation }) {
           renderer: <ProgressBar />
       }
     });
+  };
+
+  let addWinEntities = (isBoss) => {
+    if(isBoss == true){
+      engine.swap({
+        character: {
+          x: Constants.RIGHT_CHARACTER_X,
+          y: Constants.RIGHT_CHARACTER_Y,
+          xspeed: 0,
+          yspeed: -5,
+          animation: "idle",
+          frame: 0,
+          renderer: <Character />,
+        },
+        progressBar: {
+            rooms: rooms,
+            renderer: <ProgressBar />
+        },
+        win: {
+          renderer: <View/>
+        },
+        lackey: {
+          x: Constants.LACKEY_X,
+          y: Constants.LACKEY_Y,
+          isBoss: true,
+          animation: "dead",
+          frame: 0,
+          renderer: <Boss />,
+        }
+      });
+    } else {
+      engine.swap({
+        character: {
+          x: Constants.RIGHT_CHARACTER_X,
+          y: Constants.RIGHT_CHARACTER_Y,
+          xspeed: 0,
+          yspeed: -5,
+          animation: "idle",
+          frame: 0,
+          renderer: <Character />,
+        },
+        progressBar: {
+            rooms: rooms,
+            renderer: <ProgressBar />
+        },
+        win: {
+          renderer: <View/>
+        },
+        lackey: {
+          x: Constants.LACKEY_X,
+          y: Constants.LACKEY_Y,
+          isBoss: false,
+          animation: "idle",
+          frame: 0,
+          renderer: <Lackey />,
+        }
+      });
+    }
   };
 
   let addWrongEntities = () => {

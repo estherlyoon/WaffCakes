@@ -12,6 +12,7 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
   let characterHealth = entities.characterHealth;
   let lackeyHealth = entities.lackeyHealth;
   let progressBar = entities.progressBar;
+  let win = entities.win;
 
   //animation purposes
   if (i % 6 == 0) {
@@ -67,35 +68,38 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
     }
   }
 
+  //console.log(win);
   // moving character
   if (i % 6 === 0) {
     if (typeof character !== "undefined") {
-      if (character.x <= Constants.LEFT_ANSWER[0] + Constants.DOOR_WIDTH) {
-        if (answerCorrect === 1) {
-          dispatch("correct");
-        } else if (answerCorrect === -1) {
-          dispatch("incorrect");
-        }
-      } else if (
-        character.x >=
-        Constants.RIGHT_ANSWER[0] - Constants.DOOR_WIDTH
-      ) {
-        if (answerCorrect === 1) {
-          dispatch("correct");
-        } else if (answerCorrect === -1) {
-          dispatch("incorrect");
-        }
-      } else if (
-        character.y <=
-        Constants.TOP_ANSWER[1] + Constants.DOOR_HEIGHT
-      ) {
-        if (answerCorrect === 1) dispatch("correct");
-        else if (answerCorrect === -1) dispatch("incorrect");
-      } else {
         character.x += character.xspeed * 6;
         character.y += character.yspeed * 6;
+        if(win == undefined){
+
+          if (character.x <= Constants.LEFT_ANSWER[0] + Constants.DOOR_WIDTH) {
+            if (answerCorrect === 1) {
+              dispatch("correct");
+            } else if (answerCorrect === -1) {
+              dispatch("incorrect");
+            }
+          } else if (
+            character.x >=
+            Constants.RIGHT_ANSWER[0] - Constants.DOOR_WIDTH
+          ) {
+            if (answerCorrect === 1) {
+              dispatch("correct");
+            } else if (answerCorrect === -1) {
+              dispatch("incorrect");
+            }
+          } else if (
+            character.y <=
+            Constants.TOP_ANSWER[1] + Constants.DOOR_HEIGHT
+            ) {
+            if (answerCorrect === 1) dispatch("correct");
+            else if (answerCorrect === -1) dispatch("incorrect");
+          } 
+        }
       }
-    }
   }
 
   // moving fireball
@@ -122,7 +126,16 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
     dispatch("boss-battle");
   }
 
+  //handling win animation
+  if(character.y < 0){
+    if(lackey != undefined && lackey.isBoss == true){
+      dispatch("go-home")
+    } else {
+      //console.log(lackey)
+      dispatch("correct")
 
+    }
+  }
   i++;
   return entities;
 }
