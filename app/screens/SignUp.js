@@ -9,9 +9,11 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Button
 } from 'react-native';import 'firebase/firestore';
 import firebase from 'firebase';
+import database from '@react-native-firebase/database';
 
 const SignUp = ({navigation}) => {
 
@@ -21,11 +23,17 @@ const SignUp = ({navigation}) => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const onLoginSuccess = () => {
+    const onRegisterSuccess = () => {
+        const reference = database().ref('users/').push();
+        console.log("reference: " + reference);
+        reference.set({
+            user: displayName,
+        })
+        .then(() => console.log('user registered'))
         navigation.navigate('Home');
     }
     
-    const onLoginFailure = (errorMessage) => {
+    const onRegisterFailure = (errorMessage) => {
         setError(errorMessage);
         setLoading(false);
         console.log("failed to login");
@@ -45,14 +53,14 @@ const SignUp = ({navigation}) => {
         await firebase
           .auth()
           .createUserWithEmailAndPassword(email, password)
-          .then(onLoginSuccess.bind(this))
+          .then(onRegisterSuccess.bind(this))
           .catch(error => {
               let errorCode = error.code;
               let errorMessage = error.message;
               if (errorCode == 'auth/weak-password') {
-                  onLoginFailure.bind(this)('Weak Password!');
+                  onRegisterFailure.bind(this)('Weak Password!');
               } else {
-                  onLoginFailure.bind(this)(errorMessage);
+                  onRegisterFailure.bind(this)(errorMessage);
               }
           });
       }
@@ -65,6 +73,7 @@ const SignUp = ({navigation}) => {
         }}
         >
         <SafeAreaView style={{ flex: 1 }}>
+          <Button title = "Back" onPress={()=> navigation.goBack()}/>
           <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Text style={{ fontSize: 32, fontWeight: '700', color: 'gray' }}>
               Sign Up Her!!
@@ -121,7 +130,7 @@ const SignUp = ({navigation}) => {
               <Text
                 style={{ fontWeight: '200', fontSize: 17, textAlign: 'center' }}
                 onPress={() => {
-                  navigation.navigate('Title');
+                  navigation.navigate('Login');
                 }}
               >
                 Already have an account?

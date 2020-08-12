@@ -11,102 +11,30 @@ import { View,
 
 import FadeView from '../assets/components/FadeView';
 import { ScrollView } from 'react-native-gesture-handler';
+import Login from '../assets/components/Login';
 import firebase from 'firebase';
 import "firebase/firestore";
 import * as GoogleSignIn from 'expo-google-sign-in';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
+import LoginModal from './LoginModal';
 
 const screen = '../assets/images/titlescreen.png';
 const button = '../assets/images/button.png';
 
 
 const TitleScreen = ({navigation}) => {
+    const [modalVisible, setModalVisible] = useState(false);
 
-   const [email, setEmail] = useState("");
-   const [password, setPassword] = useState("");
-   const [error, setError] = useState("");
-   const [loading, setLoading] = useState(false);
-
-   const signInWithEmail = async () => {
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(onLoginSuccess.bind(this))
-      .catch(error => {
-          let errorCode = error.code;
-          let errorMessage = error.message;
-          if (errorCode == 'auth/weak-password') {
-              onLoginFailure.bind(this)('Weak Password!');
-          } else {
-              onLoginFailure.bind(this)(errorMessage);
-          }
-      });
-  }
-
-  const onLoginSuccess = () => {
-    navigation.navigate('Home');
-  }
-
-  const onLoginFailure = (errorMessage) => {
-    setError(errorMessage);
-    setLoading(false);
-    console.log("failed to login");
-  }
-
-//   const renderLoading = () => {
-//     if (loading) {
-//       return (
-//         <View>
-//           <ActivityIndicator size={'large'} />
-//         </View>
-//       );
-//     }
-//   }
+    const onStartPress = () => {
+        firebase.auth().onAuthStateChanged(user => {
+            console.log(user);
+            if (user)  navigation.navigate('Home');
+            else setModalVisible(true);
+        });
+    }
 
     return (
-
         <View style= {styles.container}>
-
-            <View >
-              <TextInput
-                // style={styles.input}
-                placeholder="Email"
-                placeholderTextColor="#B1B1B1"
-                returnKeyType="next"
-                keyboardType="email-address"
-                textContentType="emailAddress"
-                value={email}
-                onChangeText={email => setEmail(email)}
-              />
-              <TextInput
-                // style={styles.input}
-                placeholder="Password"
-                placeholderTextColor="#B1B1B1"
-                returnKeyType="done"
-                textContentType="newPassword"
-                secureTextEntry={true}
-                value={password}
-                onChangeText={password => setPassword(password)}
-              />
-            </View>
-            {/* {renderLoading} */}
-            <Text
-              style={{
-                fontSize: 18,
-                textAlign: "center",
-                color: "red",
-                width: "80%"
-              }}
-            >
-              {error}
-            </Text>
-            <TouchableOpacity
-              style={{ width: '86%', marginTop: 10 }}
-              onPress={signInWithEmail}>
-                  <Text>Sign In</Text>
-            </TouchableOpacity>
-
-
             <FadeView initial = {0} final = {1}> 
                 <ImageBackground style = {styles.background} source = {require(screen)}>
                     <View style={styles.innerContainer}>
@@ -114,7 +42,7 @@ const TitleScreen = ({navigation}) => {
                             <Text style={{fontSize:100, color:'white'}}>TITLE</Text>
                         </View>
                         <View>
-                            <TouchableOpacity onPress={()=> navigation.navigate({ name: 'Home'})}>
+                            <TouchableOpacity onPress={onStartPress}>
                                 <ImageBackground style={styles.button} source = {require(button)}>
                                     <Text style={styles.buttonText}>START</Text>
                                 </ImageBackground>
@@ -125,14 +53,11 @@ const TitleScreen = ({navigation}) => {
                                     <Text style={styles.buttonText}>CREDITS</Text>
                                 </ImageBackground>
                             </TouchableOpacity>
-
-                            <TouchableOpacity onPress={()=> navigation.navigate({ name: 'SignUp'})}>
-                                <ImageBackground style={styles.button} source = {require(button)}>
-                                    <Text style={styles.buttonText}>SIGN UP</Text>
-                                </ImageBackground>
-                            </TouchableOpacity>
                         </View>
+
+                        <LoginModal isVisible = {modalVisible} navigation= {navigation} toggle = {setModalVisible}/>
                     </View>
+                    
 
                 </ImageBackground>
             </FadeView>
@@ -167,7 +92,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 50,
-    }
+    },
 })
 
 

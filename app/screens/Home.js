@@ -21,10 +21,12 @@ import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
+import Login from "../assets/components/Login";
 
 import firebase from 'firebase';
 import SignUp from "./SignUp";
 import TutorialModal from "./tutorialModal";
+import BossLevel from "./levels/BossLevel"
 
 
 
@@ -55,27 +57,24 @@ function LevelNavigation({ navigation }) {
 
         <FadeView initial = {0} final = {1}>
           <ImageBackground style = {styles.background} source = {require(levelmap)}>
+          <View style = {{flex: 1, flexDirection: 'row', marginTop: 30, marginRight: 10, alignSelf: 'flex-end'}}>
+              <Text style = {{fontSize: 20}}>{user.email}</Text>
+            <TutorialModal />
+          </View>
 
-          <SafeAreaView style={{ flex: 1 }}>
-            <View style={styles.container}>
-              <Text>{user.email}</Text>
-            </View>
-          </SafeAreaView>
+          
+          
 
           <View style = {styles.header}/>
-             <TutorialModal />
-            <Text style={{fontSize: 27}}>
-                Welcome
-            </Text>
             <View style={{margin:20}} />
               <Button 
                 onPress={() =>  { firebase.auth().signOut(); navigation.navigate("Title"); }} //logout
                 title="Logout"/>
-            <Button
+            {/* <Button
               title={"Back"}
               onPress={() => navigation.navigate("Title")}
             ></Button>
-            <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
+            <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text> */}
             
             <TouchableOpacity
             style = {styles.level1}
@@ -97,7 +96,8 @@ function LevelNavigation({ navigation }) {
             <Image source={require(door)} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.boss}>
+          <TouchableOpacity style={styles.boss}
+          onPress={() => navigation.navigate("BossLevel")}>
             <Image source={require(boss)} />
           </TouchableOpacity>
         </ImageBackground>
@@ -128,12 +128,17 @@ function Home() {
           options={{ title: "Main Menu", gestureEnabled: false }}
         />
         <Stack.Screen
+          name="Login"
+          component={Login}
+        />
+        <Stack.Screen
           name="Level1"
           component={Level1}
           options={{ gestureEnabled: false }}
         />
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
+        <Stack.Screen name="BossLevel" component={BossLevel} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -142,11 +147,12 @@ function Home() {
 const styles = StyleSheet.create({
   header: {
     height: 50,
+    flex: 1,
   },
   background: {
     width: Dimensions.get("window").width,
     flex: 1,
-    justifyContent: "center",
+    //justifyContent: "center",
     alignItems: "center",
   },
   button: {

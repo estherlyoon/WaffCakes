@@ -50,6 +50,14 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
       }
       // handle lackey battle
       if (typeof lackey !== "undefined") {
+
+        if (events[i] === "lackey-incorrect") {
+          characterHealth.health -= 1;
+          if (characterHealth.health == 0) {
+            dispatch("gameover"); // battleover instead? TODO-- gameover if out of lives?
+          }
+        }
+
         if (events[i] === "lackey-correct") {
           // lackey defeated
           if (lackeyHealth.health == 1) {
@@ -107,7 +115,7 @@ export default function GameLoop(entities, { touches, events, dispatch }) {
     // if player types in correct answer, generate new fireball with new problem and - lackey health
 
     // when fireball reaches character, generate new fireball with new problem and - character health
-    if (character.y - fireball.y < 15) {
+    if (character.y - fireball.y < 15 ){
       fireball.y = lackey.y + 10;
       fireball.problemSeed += 1;
       //handle game over

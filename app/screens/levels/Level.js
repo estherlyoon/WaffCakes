@@ -79,6 +79,7 @@ export default function Level({ type, navigation }) {
       //navigation.navigate("Home")
     } else if(e === "go-home"){
         navigation.navigate("Home")
+        rooms = 0;
     }
   };
 
@@ -306,7 +307,6 @@ export default function Level({ type, navigation }) {
         </View> */}
       </GameEngine>
       <GameOverModal isVisible = {!running} navigation = {navigation}/>
-      <Button title="LOAD ROOM" onPress={addEntities} />
       {/* <Button title="Play Animation" onPress={this.character.play} /> */}
     </View>
   );
