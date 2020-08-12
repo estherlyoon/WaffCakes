@@ -35,6 +35,7 @@ const openSettings = () => {
 };
 const levelmap = "../assets/images/levelmap.png";
 const boss = "../assets/images/boss/bossicon.png";
+const door = "../assets/images/door2.png";
 
 
 function LevelNavigation({ navigation }) {
@@ -79,28 +80,21 @@ function LevelNavigation({ navigation }) {
             <TouchableOpacity
             style = {styles.level1}
             onPress={() => navigation.navigate("Level1")}>
-              <Image source = {require(boss)}/>
+              <Image source = {require(door)}/>
             </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.level1}
-            onPress={() => navigation.navigate("Level1")}
-          >
-            <Image source={require(boss)} />
-          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.level2}
             onPress={() => navigation.navigate("Level2")}
           >
-            <Image source={require(boss)} />
+            <Image source={require(door)} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.level3}
             onPress={() => navigation.navigate("Level3")}
           >
-            <Image source={require(boss)} />
+            <Image source={require(door)} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.boss}>
@@ -177,17 +171,17 @@ const styles = StyleSheet.create({
   },
   level1: {
     position: "absolute",
-    top: 60,
+    top: 70,
     left: 100,
   },
   level2: {
     position: "absolute",
-    top: 250,
+    top: 260,
     left: 200,
   },
   level3: {
     position: "absolute",
-    top: 470,
+    top: 480,
     left: 100,
   },
   boss: {

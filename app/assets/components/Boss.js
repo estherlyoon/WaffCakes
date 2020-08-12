@@ -13,6 +13,10 @@ const idle = [
   { image: require("../images/boss/tile005.png") }, 
 ];
 
+const dead = [
+  {image: require("../images/boss/bossdied.png")}
+]
+
 class Boss extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +43,8 @@ class Boss extends Component {
       case "idle":
         frameLoop %= idle.length;
         return idle[frameLoop].image;
+      case "dead":
+        return dead[0].image;
       default:
         frameLoop %= idle.length;
         return idle[frameLoop].image;
