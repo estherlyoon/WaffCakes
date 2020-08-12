@@ -13,7 +13,7 @@ import {
   Button
 } from 'react-native';import 'firebase/firestore';
 import firebase from 'firebase';
-import database from '@react-native-firebase/database';
+//import database from '@react-native-firebase/database';
 
 const SignUp = ({navigation}) => {
 
@@ -24,12 +24,12 @@ const SignUp = ({navigation}) => {
     const [loading, setLoading] = useState(false);
 
     const onRegisterSuccess = () => {
-        const reference = database().ref('users/').push();
-        console.log("reference: " + reference);
-        reference.set({
-            user: displayName,
-        })
-        .then(() => console.log('user registered'))
+        // const reference = database().ref('users/').push();
+        // console.log("reference: " + reference);
+        // reference.set({
+        //     user: displayName,
+        // })
+        // .then(() => console.log('user registered'))
         navigation.navigate('Home');
     }
     
