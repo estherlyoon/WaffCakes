@@ -27,6 +27,7 @@ import TutorialModal from "./tutorialModal";
 import firebase from 'firebase';
 import 'firebase/database';
 import Constants from "../config/Constants";
+import { useFocusEffect } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
@@ -38,27 +39,29 @@ const lock = "../assets/images/lock.png";
 
 function LevelNavigation({ navigation }) {
 
-  // const [user, setUser] = useState({});
+  const [lock2, setLock2] = useState(true);
+  const [lock3, setLock3] = useState(true);
+  const [name, setName] = useState("");
+
   var user = firebase.auth().currentUser;
-  const reference = firebase.database().ref(user.uid + '/name');
 
   const getName = () => {
+    user = firebase.auth().currentUser;
+    const reference = firebase.database().ref(user.uid + '/name');
     let value = "";
     reference.on('value',(snapshot) => snapshot.val() ? value = snapshot.val() : value = "Not Logged In");
-    return value;
+    setName(value);
   }
 
-  const putLock = (level) => {
-    let lastLevel = level - 1;
-    const ref = firebase.database().ref(user.uid + '/level' + lastLevel);
+  const setLock = (level) => {
+    const ref = firebase.database().ref(user.uid + '/level' + level);
     let done = false;
     if (level == 2) {
       ref.on('value',(snapshot) => done = snapshot.val());
     } else if (level == 3) {
       ref.on('value',(snapshot) => done = snapshot.val());
     }
-    console.log('done: '+ done);
-    return done ? null : require(lock);
+    return !done;
   };
 
   const enterLevel = (level) => {
@@ -72,9 +75,18 @@ function LevelNavigation({ navigation }) {
       ref.on('value',(snapshot) => done = snapshot.val());
     }
     console.log('done: '+ done);
-    // return done ? navigation.navigate("Level" + level) : null; //TODO popup do other levels first
+    return done ? navigation.navigate("Level" + level) : null; //TODO popup do other levels first
   };
 
+ 
+  useFocusEffect(() => {
+    setLock2(setLock(2));
+    setLock3(setLock(3));
+    console.log(setLock(3));
+    getName();
+  }, []);
+    
+  
   return (
     <View style={styles.container}>
 
@@ -83,7 +95,7 @@ function LevelNavigation({ navigation }) {
 
           <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.hiTextView}>
-              <Text style={styles.hiText}>Hi, {getName()}</Text>
+              <Text style={styles.hiText}>Hi, {name}</Text>
             </View>
           </SafeAreaView>
 
@@ -106,21 +118,19 @@ function LevelNavigation({ navigation }) {
             </TouchableOpacity>
 
             <View style = {styles.level2} >
-              <ImageBackground style={styles.door} source={require(door)}>
-                <TouchableOpacity 
-                  onPress={() => enterLevel(2)}>
-                </TouchableOpacity>
-                <Image style={styles.lock} source={putLock(2)}/>
-              </ImageBackground>
+            <TouchableOpacity onPress={() => {enterLevel(2)}}>
+                <ImageBackground style={styles.door} source={require(door)}>
+                  <Image style={styles.lock} source={lock2 ? require(lock) : null}/>
+                </ImageBackground>
+              </TouchableOpacity>
             </View>
 
             <View style = {styles.level3} >
-              <ImageBackground style={styles.door} source={require(door)}>
-                <TouchableOpacity 
-                  onPress={() => enterLevel(3)}>
-                </TouchableOpacity>
-                <Image style={styles.lock} source={putLock(3)}/>
-              </ImageBackground>
+            <TouchableOpacity onPress={() => {enterLevel(3)}}>
+                <ImageBackground style={styles.door} source={require(door)}>
+                  <Image style={styles.lock} source={lock3 ? require(lock) : null}/>
+                </ImageBackground>
+              </TouchableOpacity>
             </View>
 
           <TouchableOpacity style={styles.boss}>
