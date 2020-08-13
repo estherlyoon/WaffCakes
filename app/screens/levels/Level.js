@@ -31,6 +31,9 @@ import Fireball from "../../assets/components/Fireball";
 import GameOverModal from "../../assets/components/GameOverModal";
 import ProgressBar from "../../assets/components/ProgressBar";
 
+import firebase from 'firebase';
+import 'firebase/database';
+
 const onCorrect = (engine) => {
   engine.dispatch("correct-answer-touched");
 };
@@ -41,9 +44,10 @@ const onIncorrect = (engine) => {
 
 var rooms = 0;
 
-export default function Level({ type, navigation }) {
+export default function Level({ type, level, navigation }) {
   // changes to false when game is over
   const [running, setRunning] = useState(true);
+  var user = firebase.auth().currentUser;
 
   let engine = null;
   const setEngine = (ref) => {
@@ -52,13 +56,29 @@ export default function Level({ type, navigation }) {
     if (engine != null) addEntities();
   };
 
+  const changeLevelData = (level) => {
+    console.log("change level data for lev " + level);
+    if (level == 1) {
+      firebase.database().ref(user.uid + "/level1").set(
+        true
+      );
+    } else if (level == 2) {
+      firebase.database().ref(user.uid + "/level2").set(
+        true
+      );
+    } else if (level == 3) {
+      firebase.database().ref(user.uid + "/level3").set(
+        true
+      );
+    }
+  }
+
   const onEvent = (e) => {
     console.log(e);
     if (e === "correct") {
       console.log("onEvent correct answer found");
       removeProblem();
       addEntities();
-      
     } else if (e === "incorrect") {
       console.log("onEvent incorrect answer found");
       removeProblem();
@@ -78,6 +98,8 @@ export default function Level({ type, navigation }) {
       setRunning(false);
       //navigation.navigate("Home")
     } else if(e === "go-home"){
+        console.log("changing level data");
+        changeLevelData(level);
         navigation.navigate("Home")
         rooms = 0;
     }

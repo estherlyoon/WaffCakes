@@ -11,9 +11,10 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Button
-} from 'react-native';import 'firebase/firestore';
+} from 'react-native';
+import 'firebase/firestore';
+import 'firebase/database';
 import firebase from 'firebase';
-import database from '@react-native-firebase/database';
 
 const SignUp = ({navigation}) => {
 
@@ -23,13 +24,15 @@ const SignUp = ({navigation}) => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const onRegisterSuccess = () => {
-        const reference = database().ref('users/').push();
-        console.log("reference: " + reference);
-        reference.set({
-            user: displayName,
+    const onLoginSuccess = () => {
+        var user = firebase.auth().currentUser;
+        console.log('uid signup: ' + user.uid);
+        firebase.database().ref(user.uid).set({
+          "name": displayName,
+          "level1": false,
+          "level2": false,
+          "level3": false,
         })
-        .then(() => console.log('user registered'))
         navigation.navigate('Home');
     }
     
@@ -50,20 +53,33 @@ const SignUp = ({navigation}) => {
     }
 
     const signInWithEmail = async () => {
-        await firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password)
-          .then(onRegisterSuccess.bind(this))
-          .catch(error => {
-              let errorCode = error.code;
-              let errorMessage = error.message;
-              if (errorCode == 'auth/weak-password') {
-                  onRegisterFailure.bind(this)('Weak Password!');
-              } else {
-                  onRegisterFailure.bind(this)(errorMessage);
-              }
-          });
+        let mount = true;
+        if (mount) {
+          await firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(onLoginSuccess.bind(this))
+            .catch(error => {
+                let errorCode = error.code;
+                let errorMessage = error.message;
+                if (errorCode == 'auth/weak-password') {
+                    onLoginFailure.bind(this)('Weak Password!');
+                } else {
+                    onLoginFailure.bind(this)(errorMessage);
+                }
+            });
+            //onLoginSuccess();
+        }
+        return () => mount = false;
       }
+
+      // React.useEffect(() => {
+      //   firebase.auth().onAuthStateChanged((user) => {
+      //     if (user != null) {
+      //       setUser(user);
+      //     }
+      //   })
+      // }, [user])
 
     return (
 
