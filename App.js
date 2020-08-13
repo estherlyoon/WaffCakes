@@ -1,3 +1,4 @@
+import { registerRootComponent } from 'expo';
 import "react-native-gesture-handler";
 import * as React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
@@ -7,27 +8,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./app/screens/Home";
 
 import * as firebase from 'firebase';
-import firebaseConfig from "./app/config/FirebaseConfig"
+import firebaseConfig from "./app/config/FirebaseConfig";
 
-// const config = {
-//   apiKey: "AIzaSyDZtS3qg9-ybyIYTIuKsKAaCeSUXoCLWmg",
-//   authDomain: "project-id.firebaseapp.com",
-//   databaseURL: "https://project-id.firebaseio.com",
-//   projectId: "waffcakes-df9fd",
-//   storageBucket: "waffcakes-df9fd.appspot.com",
-//   messagingSenderId: "sender-id",
-//   appId: "app-id",
-//   measurementId: "G-measurement-id"
-// };
-
-
-//console.log(firebaseConfig.apiKey);
-console.log(firebaseConfig.apiKey);
 firebase.initializeApp(firebaseConfig);
 
 export default function App() {
   return <Home />;
 }
+
+registerRootComponent(App);
 
 const styles = StyleSheet.create({
   container: {

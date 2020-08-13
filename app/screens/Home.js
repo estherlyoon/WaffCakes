@@ -21,83 +21,127 @@ import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
+import Login from "../assets/components/Login";
 
-import firebase from 'firebase';
 import SignUp from "./SignUp";
 import TutorialModal from "./tutorialModal";
+import BossLevel from "./levels/BossLevel"
 
-
+import firebase from 'firebase';
+import 'firebase/database';
+import Constants from "../config/Constants";
 
 const Stack = createStackNavigator();
-// const handlePress = () => console.log("Image Pressed");
-const openSettings = () => {
-  console.log("Open Settings");
-};
+
 const levelmap = "../assets/images/levelmap.png";
 const boss = "../assets/images/boss/bossicon.png";
 const door = "../assets/images/door2.png";
+const lock = "../assets/images/lock.png";
 
 
 function LevelNavigation({ navigation }) {
 
-  const [user, setUser] = useState({});
+  const [lock2, setLock2] = useState(true);
+  const [lock3, setLock3] = useState(true);
+  const [name, setName] = useState("");
 
-  React.useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user != null) {
-        setUser(user);
-      }
-    })
-  }, [user])
+  var user = firebase.auth().currentUser;
 
+  const getName = () => {
+    user = firebase.auth().currentUser;
+    const reference = firebase.database().ref(user.uid + '/name');
+    let value = "";
+    reference.on('value',(snapshot) => snapshot.val() ? value = snapshot.val() : value = "Not Logged In");
+    setName(value);
+  }
+
+  const setLock = (level) => {
+    const ref = firebase.database().ref(user.uid + '/level' + level);
+    let done = false;
+    if (level == 2) {
+      ref.on('value',(snapshot) => done = snapshot.val());
+    } else if (level == 3) {
+      ref.on('value',(snapshot) => done = snapshot.val());
+    }
+    return !done;
+  };
+
+  const enterLevel = (level) => {
+    console.log("entering");
+    let lastLevel = level - 1;
+    const ref = firebase.database().ref(user.uid + '/level' + lastLevel);
+    let done = false;
+    if (level == 2) {
+      ref.on('value',(snapshot) => done = snapshot.val());
+    } else if (level = 3) {
+      ref.on('value',(snapshot) => done = snapshot.val());
+    }
+    console.log('done: '+ done);
+    return done ? navigation.navigate("Level" + level) : null; //TODO popup do other levels first
+  };
+
+ 
+  useFocusEffect(() => {
+    setLock2(setLock(2));
+    setLock3(setLock(3));
+    console.log(setLock(3));
+    getName();
+  }, []);
+    
+  
   return (
     <View style={styles.container}>
 
         <FadeView initial = {0} final = {1}>
           <ImageBackground style = {styles.background} source = {require(levelmap)}>
+          <View style = {{flex: 1, flexDirection: 'row', marginTop: 30, marginRight: 10, alignSelf: 'flex-end'}}>
+              <Text style = {{fontSize: 20}}>{user.email}</Text>
+            <TutorialModal />
+          </View>
 
           <SafeAreaView style={{ flex: 1 }}>
-            <View style={styles.container}>
-              <Text>{user.email}</Text>
+            <View style={styles.hiTextView}>
+              <Text style={styles.hiText}>Hi, {name}</Text>
             </View>
           </SafeAreaView>
 
           <View style = {styles.header}/>
              <TutorialModal />
-            <Text style={{fontSize: 27}}>
-                Welcome
-            </Text>
             <View style={{margin:20}} />
               <Button 
                 onPress={() =>  { firebase.auth().signOut(); navigation.navigate("Title"); }} //logout
                 title="Logout"/>
-            <Button
+             <Button
               title={"Back"}
               onPress={() => navigation.navigate("Title")}
             ></Button>
-            <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
+
             
             <TouchableOpacity
-            style = {styles.level1}
-            onPress={() => navigation.navigate("Level1")}>
-              <Image source = {require(door)}/>
+            style={styles.level1}
+            onPress={() => navigation.navigate("Level1")}
+            >
+              <Image source={require(door)} />
             </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.level2}
-            onPress={() => navigation.navigate("Level2")}
-          >
-            <Image source={require(door)} />
-          </TouchableOpacity>
+            <View style = {styles.level2} >
+            <TouchableOpacity onPress={() => {enterLevel(2)}}>
+                <ImageBackground style={styles.door} source={require(door)}>
+                  <Image style={styles.lock} source={lock2 ? require(lock) : null}/>
+                </ImageBackground>
+              </TouchableOpacity>
+            </View>
 
-          <TouchableOpacity
-            style={styles.level3}
-            onPress={() => navigation.navigate("Level3")}
-          >
-            <Image source={require(door)} />
-          </TouchableOpacity>
+            <View style = {styles.level3} >
+            <TouchableOpacity onPress={() => {enterLevel(3)}}>
+                <ImageBackground style={styles.door} source={require(door)}>
+                  <Image style={styles.lock} source={lock3 ? require(lock) : null}/>
+                </ImageBackground>
+              </TouchableOpacity>
+            </View>
 
-          <TouchableOpacity style={styles.boss}>
+          <TouchableOpacity style={styles.boss}
+          onPress={() => navigation.navigate("BossLevel")}>
             <Image source={require(boss)} />
           </TouchableOpacity>
         </ImageBackground>
@@ -128,12 +172,17 @@ function Home() {
           options={{ title: "Main Menu", gestureEnabled: false }}
         />
         <Stack.Screen
+          name="Login"
+          component={Login}
+        />
+        <Stack.Screen
           name="Level1"
           component={Level1}
           options={{ gestureEnabled: false }}
         />
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
+        <Stack.Screen name="BossLevel" component={BossLevel} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -142,11 +191,12 @@ function Home() {
 const styles = StyleSheet.create({
   header: {
     height: 50,
+    flex: 1,
   },
   background: {
     width: Dimensions.get("window").width,
     flex: 1,
-    justifyContent: "center",
+    //justifyContent: "center",
     alignItems: "center",
   },
   button: {
@@ -173,11 +223,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 70,
     left: 100,
+    width: 100,
+    height: 100,
+    alignItems: 'center',
   },
   level2: {
     position: "absolute",
     top: 260,
     left: 200,
+    width: 100,
+    height: 100,
+    alignItems: 'center',
   },
   level3: {
     position: "absolute",
@@ -188,5 +244,29 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 750,
     left: 190,
+    width: 100,
+    height: 100,
+    alignItems: 'center',
   },
+  hiTextView: {
+    position: 'absolute',
+    top: 10,
+    // left: Constants.MAX_WIDTH / 2,
+  },
+  hiText: {
+    fontSize: 30,
+  },
+  door: {
+    flex: 1,
+    height: 100,
+    width: 100,
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  lock: {
+    top: 20,
+    width: 60,
+    height: 60,
+    overflow:"visible",
+  }
 });
