@@ -28,19 +28,23 @@ const TitleScreen = ({navigation}) => {
    const [loading, setLoading] = useState(false);
 
    const signInWithEmail = async () => {
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(onLoginSuccess.bind(this))
-      .catch(error => {
-          let errorCode = error.code;
-          let errorMessage = error.message;
-          if (errorCode == 'auth/weak-password') {
-              onLoginFailure.bind(this)('Weak Password!');
-          } else {
-              onLoginFailure.bind(this)(errorMessage);
-          }
-      });
+       let mount = true;
+       if (mount) {
+            await firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+                .then(onLoginSuccess.bind(this))
+                .catch(error => {
+                    let errorCode = error.code;
+                    let errorMessage = error.message;
+                    if (errorCode == 'auth/weak-password') {
+                        onLoginFailure.bind(this)('Weak Password!');
+                    } else {
+                        onLoginFailure.bind(this)(errorMessage);
+                    }
+                });
+       }
+       return () => mount = false;
   }
 
   const onLoginSuccess = () => {

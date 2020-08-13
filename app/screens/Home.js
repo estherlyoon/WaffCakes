@@ -25,7 +25,7 @@ import FadeView from "../assets/components/FadeView";
 import firebase from 'firebase';
 import SignUp from "./SignUp";
 import TutorialModal from "./tutorialModal";
-
+import 'firebase/database';
 
 
 const Stack = createStackNavigator();
@@ -40,15 +40,24 @@ const door = "../assets/images/door2.png";
 
 function LevelNavigation({ navigation }) {
 
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
+  var user = firebase.auth().currentUser;
 
-  React.useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user != null) {
-        setUser(user);
-      }
-    })
-  }, [user])
+  const getName = () => {
+    console.log(user.uid);
+    const reference = firebase.database().ref(user.uid + '/name');
+    const value = reference.on('value',(snapshot) => console.log(snapshot.val()));
+    console.log(value);
+    // return reference.once("value");
+  }
+
+  // React.useEffect(() => {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user != null) {
+  //       setUser(user);
+  //     }
+  //   })
+  // }, [user])
 
   return (
     <View style={styles.container}>
@@ -58,7 +67,7 @@ function LevelNavigation({ navigation }) {
 
           <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
-              <Text>{user.email}</Text>
+              <Text>{getName()}</Text>
             </View>
           </SafeAreaView>
 

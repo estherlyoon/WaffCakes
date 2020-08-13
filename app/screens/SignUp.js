@@ -10,7 +10,9 @@ import {
   ActivityIndicator,
   Keyboard,
   TouchableWithoutFeedback
-} from 'react-native';import 'firebase/firestore';
+} from 'react-native';
+import 'firebase/firestore';
+import 'firebase/database';
 import firebase from 'firebase';
 
 const SignUp = ({navigation}) => {
@@ -20,8 +22,16 @@ const SignUp = ({navigation}) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    var user = firebase.auth().currentUser;
 
     const onLoginSuccess = () => {
+        console.log('uid: ' + user.uid);
+        firebase.database().ref(user.uid).set({
+          "name": displayName,
+          "level1": "false",
+          "level2": "false",
+          "level3": "false",
+        })
         navigation.navigate('Home');
     }
     
@@ -42,20 +52,33 @@ const SignUp = ({navigation}) => {
     }
 
     const signInWithEmail = async () => {
-        await firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password)
-          .then(onLoginSuccess.bind(this))
-          .catch(error => {
-              let errorCode = error.code;
-              let errorMessage = error.message;
-              if (errorCode == 'auth/weak-password') {
-                  onLoginFailure.bind(this)('Weak Password!');
-              } else {
-                  onLoginFailure.bind(this)(errorMessage);
-              }
-          });
+        let mount = true;
+        if (mount) {
+          await firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            // .then(onLoginSuccess.bind(this))
+            .catch(error => {
+                let errorCode = error.code;
+                let errorMessage = error.message;
+                if (errorCode == 'auth/weak-password') {
+                    onLoginFailure.bind(this)('Weak Password!');
+                } else {
+                    onLoginFailure.bind(this)(errorMessage);
+                }
+            });
+            onLoginSuccess();
+        }
+        return () => mount = false;
       }
+
+      // React.useEffect(() => {
+      //   firebase.auth().onAuthStateChanged((user) => {
+      //     if (user != null) {
+      //       setUser(user);
+      //     }
+      //   })
+      // }, [user])
 
     return (
 
