@@ -22,15 +22,15 @@ const SignUp = ({navigation}) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    var user = firebase.auth().currentUser;
 
     const onLoginSuccess = () => {
-        console.log('uid: ' + user.uid);
+        var user = firebase.auth().currentUser;
+        console.log('uid signup: ' + user.uid);
         firebase.database().ref(user.uid).set({
           "name": displayName,
-          "level1": "false",
-          "level2": "false",
-          "level3": "false",
+          "level1": false,
+          "level2": false,
+          "level3": false,
         })
         navigation.navigate('Home');
     }
@@ -57,7 +57,7 @@ const SignUp = ({navigation}) => {
           await firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            // .then(onLoginSuccess.bind(this))
+            .then(onLoginSuccess.bind(this))
             .catch(error => {
                 let errorCode = error.code;
                 let errorMessage = error.message;
@@ -67,7 +67,7 @@ const SignUp = ({navigation}) => {
                     onLoginFailure.bind(this)(errorMessage);
                 }
             });
-            onLoginSuccess();
+            //onLoginSuccess();
         }
         return () => mount = false;
       }

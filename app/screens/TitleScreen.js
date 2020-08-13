@@ -70,50 +70,48 @@ const TitleScreen = ({navigation}) => {
     return (
 
         <View style= {styles.container}>
-
-            <View >
-              <TextInput
-                // style={styles.input}
-                placeholder="Email"
-                placeholderTextColor="#B1B1B1"
-                returnKeyType="next"
-                keyboardType="email-address"
-                textContentType="emailAddress"
-                value={email}
-                onChangeText={email => setEmail(email)}
-              />
-              <TextInput
-                // style={styles.input}
-                placeholder="Password"
-                placeholderTextColor="#B1B1B1"
-                returnKeyType="done"
-                textContentType="newPassword"
-                secureTextEntry={true}
-                value={password}
-                onChangeText={password => setPassword(password)}
-              />
-            </View>
-            {/* {renderLoading} */}
-            <Text
-              style={{
-                fontSize: 18,
-                textAlign: "center",
-                color: "red",
-                width: "80%"
-              }}
-            >
-              {error}
-            </Text>
-            <TouchableOpacity
-              style={{ width: '86%', marginTop: 10 }}
-              onPress={signInWithEmail}>
-                  <Text>Sign In</Text>
-            </TouchableOpacity>
-
-
             <FadeView initial = {0} final = {1}> 
                 <ImageBackground style = {styles.background} source = {require(screen)}>
                     <View style={styles.innerContainer}>
+
+                        <View >
+                            <TextInput
+                                // style={styles.input}
+                                placeholder="Email"
+                                placeholderTextColor="#B1B1B1"
+                                returnKeyType="next"
+                                keyboardType="email-address"
+                                textContentType="emailAddress"
+                                value={email}
+                                onChangeText={email => setEmail(email)}
+                            />
+                            <TextInput
+                                // style={styles.input}
+                                placeholder="Password"
+                                placeholderTextColor="#B1B1B1"
+                                returnKeyType="done"
+                                textContentType="newPassword"
+                                secureTextEntry={true}
+                                value={password}
+                                onChangeText={password => setPassword(password)}
+                            />
+                            </View>
+                            {/* {renderLoading} */}
+                            <Text
+                            style={{
+                                fontSize: 18,
+                                textAlign: "center",
+                                color: "red",
+                                width: "80%"
+                            }}
+                            >
+                            {error}
+                            </Text>
+                            <TouchableOpacity
+                            style={{ width: '86%', marginTop: 10 }}
+                            onPress={signInWithEmail}>
+                                <Text>Sign In</Text>
+                            </TouchableOpacity>
                         <View>
                             <Text style={{fontSize:100, color:'white'}}>TITLE</Text>
                         </View>
@@ -137,7 +135,6 @@ const TitleScreen = ({navigation}) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-
                 </ImageBackground>
             </FadeView>
         </View>

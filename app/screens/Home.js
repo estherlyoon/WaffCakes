@@ -22,42 +22,58 @@ import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
 
-import firebase from 'firebase';
 import SignUp from "./SignUp";
 import TutorialModal from "./tutorialModal";
+import firebase from 'firebase';
 import 'firebase/database';
-
+import Constants from "../config/Constants";
 
 const Stack = createStackNavigator();
-// const handlePress = () => console.log("Image Pressed");
-const openSettings = () => {
-  console.log("Open Settings");
-};
+
 const levelmap = "../assets/images/levelmap.png";
 const boss = "../assets/images/boss/bossicon.png";
 const door = "../assets/images/door2.png";
+const lock = "../assets/images/lock.png";
 
 
 function LevelNavigation({ navigation }) {
 
   // const [user, setUser] = useState({});
   var user = firebase.auth().currentUser;
+  const reference = firebase.database().ref(user.uid + '/name');
 
   const getName = () => {
-    console.log(user.uid);
-    const reference = firebase.database().ref(user.uid + '/name');
-    const value = reference.on('value',(snapshot) => console.log(snapshot.val()));
-    console.log(value);
-    // return reference.once("value");
+    let value = "";
+    reference.on('value',(snapshot) => snapshot.val() ? value = snapshot.val() : value = "Not Logged In");
+    return value;
   }
 
-  // React.useEffect(() => {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (user != null) {
-  //       setUser(user);
-  //     }
-  //   })
-  // }, [user])
+  const putLock = (level) => {
+    let lastLevel = level - 1;
+    const ref = firebase.database().ref(user.uid + '/level' + lastLevel);
+    let done = false;
+    if (level == 2) {
+      ref.on('value',(snapshot) => done = snapshot.val());
+    } else if (level == 3) {
+      ref.on('value',(snapshot) => done = snapshot.val());
+    }
+    console.log('done: '+ done);
+    return done ? null : require(lock);
+  };
+
+  const enterLevel = (level) => {
+    console.log("entering");
+    let lastLevel = level - 1;
+    const ref = firebase.database().ref(user.uid + '/level' + lastLevel);
+    let done = false;
+    if (level == 2) {
+      ref.on('value',(snapshot) => done = snapshot.val());
+    } else if (level = 3) {
+      ref.on('value',(snapshot) => done = snapshot.val());
+    }
+    console.log('done: '+ done);
+    // return done ? navigation.navigate("Level" + level) : null; //TODO popup do other levels first
+  };
 
   return (
     <View style={styles.container}>
@@ -66,16 +82,13 @@ function LevelNavigation({ navigation }) {
           <ImageBackground style = {styles.background} source = {require(levelmap)}>
 
           <SafeAreaView style={{ flex: 1 }}>
-            <View style={styles.container}>
-              <Text>{getName()}</Text>
+            <View style={styles.hiTextView}>
+              <Text style={styles.hiText}>Hi, {getName()}</Text>
             </View>
           </SafeAreaView>
 
           <View style = {styles.header}/>
              <TutorialModal />
-            <Text style={{fontSize: 27}}>
-                Welcome
-            </Text>
             <View style={{margin:20}} />
               <Button 
                 onPress={() =>  { firebase.auth().signOut(); navigation.navigate("Title"); }} //logout
@@ -84,27 +97,31 @@ function LevelNavigation({ navigation }) {
               title={"Back"}
               onPress={() => navigation.navigate("Title")}
             ></Button>
-            <Text>YAAARR ThIS BE THe HOmE SCREeN MaTEY!!!1!!</Text>
             
             <TouchableOpacity
-            style = {styles.level1}
-            onPress={() => navigation.navigate("Level1")}>
-              <Image source = {require(door)}/>
+            style={styles.level1}
+            onPress={() => navigation.navigate("Level1")}
+            >
+              <Image source={require(door)} />
             </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.level2}
-            onPress={() => navigation.navigate("Level2")}
-          >
-            <Image source={require(door)} />
-          </TouchableOpacity>
+            <View style = {styles.level2} >
+              <ImageBackground style={styles.door} source={require(door)}>
+                <TouchableOpacity 
+                  onPress={() => enterLevel(2)}>
+                </TouchableOpacity>
+                <Image style={styles.lock} source={putLock(2)}/>
+              </ImageBackground>
+            </View>
 
-          <TouchableOpacity
-            style={styles.level3}
-            onPress={() => navigation.navigate("Level3")}
-          >
-            <Image source={require(door)} />
-          </TouchableOpacity>
+            <View style = {styles.level3} >
+              <ImageBackground style={styles.door} source={require(door)}>
+                <TouchableOpacity 
+                  onPress={() => enterLevel(3)}>
+                </TouchableOpacity>
+                <Image style={styles.lock} source={putLock(3)}/>
+              </ImageBackground>
+            </View>
 
           <TouchableOpacity style={styles.boss}>
             <Image source={require(boss)} />
@@ -182,11 +199,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 70,
     left: 100,
+    width: 100,
+    height: 100,
+    alignItems: 'center',
   },
   level2: {
     position: "absolute",
     top: 260,
     left: 200,
+    width: 100,
+    height: 100,
+    alignItems: 'center',
   },
   level3: {
     position: "absolute",
@@ -197,5 +220,29 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 750,
     left: 190,
+    width: 100,
+    height: 100,
+    alignItems: 'center',
   },
+  hiTextView: {
+    position: 'absolute',
+    top: 10,
+    // left: Constants.MAX_WIDTH / 2,
+  },
+  hiText: {
+    fontSize: 30,
+  },
+  door: {
+    flex: 1,
+    height: 100,
+    width: 100,
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  lock: {
+    top: 20,
+    width: 60,
+    height: 60,
+    overflow:"visible",
+  }
 });
