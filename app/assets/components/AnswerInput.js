@@ -18,7 +18,7 @@ const AnswerInput = ({ engine, answer }) => {
 
   return (
     <TextInput
-      keyboardType={Platform.OS == 'android' ? "numeric" : "default"}
+      keyboardType={"numeric"}
       style={{ fontSize: 40 }}
       placeholder="Answer"
       placeholderTextColor="blue"
@@ -26,6 +26,7 @@ const AnswerInput = ({ engine, answer }) => {
       onSubmitEditing={checkAnswer}
       blurOnSubmit={false}
       value={input}
+      returnKeyType={"done"}
     />
   );
 };

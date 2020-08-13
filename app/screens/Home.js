@@ -21,13 +21,15 @@ import Level2 from "./levels/Level2";
 import Level3 from "./levels/Level3";
 import TitleScreen from "./TitleScreen";
 import FadeView from "../assets/components/FadeView";
+import Login from "../assets/components/Login";
 
 import SignUp from "./SignUp";
 import TutorialModal from "./tutorialModal";
+import BossLevel from "./levels/BossLevel"
+
 import firebase from 'firebase';
 import 'firebase/database';
 import Constants from "../config/Constants";
-import { useFocusEffect } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
@@ -92,6 +94,10 @@ function LevelNavigation({ navigation }) {
 
         <FadeView initial = {0} final = {1}>
           <ImageBackground style = {styles.background} source = {require(levelmap)}>
+          <View style = {{flex: 1, flexDirection: 'row', marginTop: 30, marginRight: 10, alignSelf: 'flex-end'}}>
+              <Text style = {{fontSize: 20}}>{user.email}</Text>
+            <TutorialModal />
+          </View>
 
           <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.hiTextView}>
@@ -105,10 +111,11 @@ function LevelNavigation({ navigation }) {
               <Button 
                 onPress={() =>  { firebase.auth().signOut(); navigation.navigate("Title"); }} //logout
                 title="Logout"/>
-            <Button
+             <Button
               title={"Back"}
               onPress={() => navigation.navigate("Title")}
             ></Button>
+
             
             <TouchableOpacity
             style={styles.level1}
@@ -133,7 +140,8 @@ function LevelNavigation({ navigation }) {
               </TouchableOpacity>
             </View>
 
-          <TouchableOpacity style={styles.boss}>
+          <TouchableOpacity style={styles.boss}
+          onPress={() => navigation.navigate("BossLevel")}>
             <Image source={require(boss)} />
           </TouchableOpacity>
         </ImageBackground>
@@ -164,12 +172,17 @@ function Home() {
           options={{ title: "Main Menu", gestureEnabled: false }}
         />
         <Stack.Screen
+          name="Login"
+          component={Login}
+        />
+        <Stack.Screen
           name="Level1"
           component={Level1}
           options={{ gestureEnabled: false }}
         />
         <Stack.Screen name="Level2" component={Level2} />
         <Stack.Screen name="Level3" component={Level3} />
+        <Stack.Screen name="BossLevel" component={BossLevel} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -178,11 +191,12 @@ function Home() {
 const styles = StyleSheet.create({
   header: {
     height: 50,
+    flex: 1,
   },
   background: {
     width: Dimensions.get("window").width,
     flex: 1,
-    justifyContent: "center",
+    //justifyContent: "center",
     alignItems: "center",
   },
   button: {

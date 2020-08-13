@@ -101,6 +101,7 @@ export default function Level({ type, level, navigation }) {
         console.log("changing level data");
         changeLevelData(level);
         navigation.navigate("Home")
+        rooms = 0;
     }
   };
 
@@ -328,7 +329,6 @@ export default function Level({ type, level, navigation }) {
         </View> */}
       </GameEngine>
       <GameOverModal isVisible = {!running} navigation = {navigation}/>
-      <Button title="LOAD ROOM" onPress={addEntities} />
       {/* <Button title="Play Animation" onPress={this.character.play} /> */}
     </View>
   );

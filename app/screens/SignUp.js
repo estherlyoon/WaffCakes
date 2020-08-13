@@ -9,7 +9,8 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Button
 } from 'react-native';
 import 'firebase/firestore';
 import 'firebase/database';
@@ -35,7 +36,7 @@ const SignUp = ({navigation}) => {
         navigation.navigate('Home');
     }
     
-    const onLoginFailure = (errorMessage) => {
+    const onRegisterFailure = (errorMessage) => {
         setError(errorMessage);
         setLoading(false);
         console.log("failed to login");
@@ -88,6 +89,7 @@ const SignUp = ({navigation}) => {
         }}
         >
         <SafeAreaView style={{ flex: 1 }}>
+          <Button title = "Back" onPress={()=> navigation.goBack()}/>
           <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Text style={{ fontSize: 32, fontWeight: '700', color: 'gray' }}>
               Sign Up Her!!
@@ -144,7 +146,7 @@ const SignUp = ({navigation}) => {
               <Text
                 style={{ fontWeight: '200', fontSize: 17, textAlign: 'center' }}
                 onPress={() => {
-                  navigation.navigate('Title');
+                  navigation.navigate('Login');
                 }}
               >
                 Already have an account?

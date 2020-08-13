@@ -1,3 +1,4 @@
+import { registerRootComponent } from 'expo';
 import "react-native-gesture-handler";
 import * as React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
@@ -7,13 +8,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./app/screens/Home";
 
 import * as firebase from 'firebase';
-import firebaseConfig from "./app/config/FirebaseConfig"
+import firebaseConfig from "./app/config/FirebaseConfig";
 
 firebase.initializeApp(firebaseConfig);
 
 export default function App() {
   return <Home />;
 }
+
+registerRootComponent(App);
 
 const styles = StyleSheet.create({
   container: {

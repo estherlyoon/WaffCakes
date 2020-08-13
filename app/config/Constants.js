@@ -24,11 +24,11 @@ export default Constants = {
     Dimensions.get("window").height,
   ],
   //locations of answer (top and left)
-  TOP_ANSWER: [Dimensions.get("window").width / 2, 0],
-  LEFT_ANSWER: [0, Dimensions.get("window").height / 4],
+  TOP_ANSWER: [Dimensions.get("window").width / 2 - 20, 50],
+  LEFT_ANSWER: [0, 90 + Dimensions.get("window").height / 4],
   RIGHT_ANSWER: [
     Dimensions.get("window").width - 60,
-    Dimensions.get("window").height / 4,
+    90 + Dimensions.get("window").height / 4,
   ],
   LEVEL_ROOMS: 3,
   FIREBALL_SPEED: 1,

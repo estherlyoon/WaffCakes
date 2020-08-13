@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Image } from "react-native";
 import { TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import { useState } from "react";
@@ -14,10 +14,10 @@ export default function TutorialModal() {
   };
 
   let tutorialSteps = [];
-  tutorialSteps.push("The first thing to note... ");
-  tutorialSteps.push("You must also... ");
-  tutorialSteps.push("finally... ");
-  tutorialSteps.push("good luck");
+  tutorialSteps.push("Welcome to WaffCake's ADDventure!");
+  tutorialSteps.push("Explore the dungeon by completing levels! ");
+  tutorialSteps.push("You'll need your wits and math skills to avoid getting gobbled by evil Mathlings.");
+  tutorialSteps.push("Good luck!");
 
   const [index, setIndex] = useState(0);
 
@@ -36,15 +36,17 @@ export default function TutorialModal() {
   return (
     <View>
       <TouchableOpacity onPress={toggleModal} style={{ width: 50 }}>
-        <Icon name="info" style={styles.tutorial} size={50} />
+        <Icon name="info" style={styles.tutorial} size={40} />
       </TouchableOpacity>
 
       <Modal isVisible={isModalVisible} animationType="slide">
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <Image style = {{marginBottom: 10}}
+            source = {require("../assets/images/waffle/waffle1.png")}/>
             <Text style={styles.modalText}>{tutorialSteps[index]}</Text>
-            <Button title="Skip Tutorial" onPress={toggleModal} />
             <Button title={buttonName} onPress={nextText} />
+            <Button title="Skip Tutorial" onPress={toggleModal} />
           </View>
         </View>
       </Modal>
@@ -73,6 +75,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 5,
+    fontSize: 20,
     textAlign: "center",
   },
   modalView: {

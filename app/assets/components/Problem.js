@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     left: Constants.LEFT_ANSWER[0],
     height: 100,
     width: 57,
-    backgroundColor: Colors.answer,
+    // backgroundColor: Colors.answer,
   },
   topAnswer: {
     position: "absolute",
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     left: Constants.TOP_ANSWER[0],
     height: 100,
     width: 57,
-    backgroundColor: Colors.answer,
+    // backgroundColor: Colors.answer,
   },
   rightAnswer: {
     position: "absolute",
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     left: Constants.RIGHT_ANSWER[0],
     height: 100,
     width: 57,
-    backgroundColor: Colors.answer,
+    // backgroundColor: Colors.answer,
   },
 });
 
